@@ -1,3 +1,5 @@
+import { TURN_RESULT } from './constants.js';
+
 export function createCards(cardValues) {
   const cards = [];
 
@@ -64,4 +66,16 @@ export function checkCardCanBeOpened(openedCardIds, matchedCardIds, cardId) {
   const isCardAlreadyMatched = matchedCardIds.includes(cardId);
 
   return canOpenAnotherCard && !isCardAlreadyOpened && !isCardAlreadyMatched;
+}
+
+export function checkPair(firstCard, secondCard) {
+  return firstCard.value === secondCard.value;
+}
+
+export function getTurnResult(firstCard, secondCard) {
+  if (checkPair(firstCard, secondCard)) {
+    return TURN_RESULT.MATCHED;
+  }
+
+  return TURN_RESULT.NOT_MATCHED;
 }
