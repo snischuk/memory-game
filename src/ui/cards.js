@@ -24,6 +24,11 @@ export function renderCards(gameBoardElement, cards, gameState) {
       cardElement.textContent = '?';
     }
 
+    cardElement.setAttribute(
+      'aria-label',
+      isCardOpened || isCardMatched ? `Card ${card.value}` : 'Hidden card',
+    );
+
     gameBoardElement.append(cardElement);
   });
 }
