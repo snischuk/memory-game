@@ -55,3 +55,13 @@ export function createGame(cardValues) {
     gameState,
   };
 }
+
+export function checkCardCanBeOpened(openedCardIds, matchedCardIds, cardId) {
+  const canOpenAnotherCard = openedCardIds.length < 2;
+
+  const isCardAlreadyOpened = openedCardIds.includes(cardId);
+
+  const isCardAlreadyMatched = matchedCardIds.includes(cardId);
+
+  return canOpenAnotherCard && !isCardAlreadyOpened && !isCardAlreadyMatched;
+}
