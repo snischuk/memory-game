@@ -112,3 +112,7 @@ export function playTurn(gameState, cards, turnResult) {
     movesCount,
   };
 }
+
+export function checkGameComplete(matchedCardIds, cards) {
+  return matchedCardIds.length === cards.length;
+}
