@@ -1,6 +1,6 @@
 import { createGame } from './game.js';
 
-import { handleCardSelection, finishTurn } from './gameFlow.js';
+import { handleCardSelection, finishTurn } from './game-flow.js';
 
 import { TURN_RESULT, MISMATCH_CLOSE_DELAY } from './constants.js';
 
