@@ -79,3 +79,36 @@ export function getTurnResult(firstCard, secondCard) {
 
   return TURN_RESULT.NOT_MATCHED;
 }
+
+export function addMatchedCards(matchedCardIds, firstCardId, secondCardId) {
+  return [...matchedCardIds, firstCardId, secondCardId];
+}
+
+export function closeOpenedCards() {
+  return [];
+}
+
+export function incrementMovesCount(movesCount) {
+  return movesCount + 1;
+}
+
+export function playTurn(gameState, cards, turnResult) {
+  const firstCardId = gameState.openedCardIds[0];
+
+  const secondCardId = gameState.openedCardIds[1];
+
+  const movesCount = incrementMovesCount(gameState.movesCount);
+
+  let matchedCardIds = gameState.matchedCardIds;
+
+  if (turnResult === TURN_RESULT.MATCHED) {
+    matchedCardIds = addMatchedCards(matchedCardIds, firstCardId, secondCardId);
+  }
+
+  return {
+    ...gameState,
+    openedCardIds: closeOpenedCards(),
+    matchedCardIds,
+    movesCount,
+  };
+}
