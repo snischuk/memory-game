@@ -154,3 +154,7 @@ export function selectCard(gameState, cardId) {
     openedCardIds,
   };
 }
+
+export function getTotalPairsCount(cards) {
+  return cards.length / 2;
+}
