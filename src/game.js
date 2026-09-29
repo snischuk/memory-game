@@ -44,3 +44,14 @@ export function createGameState() {
     isGameComplete: false,
   };
 }
+
+export function createGame(cardValues) {
+  const cards = createCards(cardValues);
+  const shuffledCards = shuffleCards(cards);
+  const gameState = createGameState();
+
+  return {
+    cards: shuffledCards,
+    gameState,
+  };
+}
