@@ -105,11 +105,14 @@ export function playTurn(gameState, cards, turnResult) {
     matchedCardIds = addMatchedCards(matchedCardIds, firstCardId, secondCardId);
   }
 
+  const isGameComplete = checkGameComplete(matchedCardIds, cards);
+
   return {
     ...gameState,
     openedCardIds: closeOpenedCards(),
     matchedCardIds,
     movesCount,
+    isGameComplete,
   };
 }
 
