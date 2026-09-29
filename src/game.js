@@ -116,3 +116,41 @@ export function playTurn(gameState, cards, turnResult) {
 export function checkGameComplete(matchedCardIds, cards) {
   return matchedCardIds.length === cards.length;
 }
+
+export function openCard(openedCardIds, cardId) {
+  return [...openedCardIds, cardId];
+}
+
+export function getCardById(cards, cardId) {
+  return cards.find((card) => card.id === cardId);
+}
+
+export function getOpenedCards(cards, openedCardIds) {
+  const firstCard = getCardById(cards, openedCardIds[0]);
+
+  const secondCard = getCardById(cards, openedCardIds[1]);
+
+  return {
+    firstCard,
+    secondCard,
+  };
+}
+
+export function selectCard(gameState, cardId) {
+  const canOpenCard = checkCardCanBeOpened(
+    gameState.openedCardIds,
+    gameState.matchedCardIds,
+    cardId,
+  );
+
+  if (!canOpenCard) {
+    return gameState;
+  }
+
+  const openedCardIds = openCard(gameState.openedCardIds, cardId);
+
+  return {
+    ...gameState,
+    openedCardIds,
+  };
+}
