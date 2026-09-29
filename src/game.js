@@ -35,3 +35,12 @@ export function shuffleCards(cards) {
 
   return shuffledCards;
 }
+
+export function createGameState() {
+  return {
+    openedCardIds: [],
+    matchedCardIds: [],
+    movesCount: 0,
+    isGameComplete: false,
+  };
+}
