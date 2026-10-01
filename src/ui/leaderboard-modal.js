@@ -2,20 +2,22 @@ import { createModal } from './modals.js';
 
 export function createLeaderboardModal() {
   const titleElement = document.createElement('h2');
-
   titleElement.textContent = 'Leaderboard';
 
   const resultsElement = document.createElement('div');
+  resultsElement.classList.add('leaderboard-results');
 
   const closeButtonElement = document.createElement('button');
-
+  closeButtonElement.classList.add('button');
   closeButtonElement.textContent = 'Close';
 
-  const modalElement = createModal([
-    titleElement,
-    resultsElement,
-    closeButtonElement,
-  ]);
+  const contentElement = document.createElement('div');
+
+  contentElement.classList.add('leaderboard-content');
+
+  contentElement.append(titleElement, resultsElement, closeButtonElement);
+
+  const modalElement = createModal([contentElement]);
 
   return {
     modalElement,
@@ -28,9 +30,7 @@ function formatPlayedDate(playedAt) {
   const date = new Date(playedAt);
 
   const day = String(date.getDate()).padStart(2, '0');
-
   const month = String(date.getMonth() + 1).padStart(2, '0');
-
   const year = date.getFullYear();
 
   return `${day}.${month}.${year}`;
@@ -40,15 +40,12 @@ function createLeaderboardHeader() {
   const tableRowElement = document.createElement('tr');
 
   const placeHeaderElement = document.createElement('th');
-
   placeHeaderElement.textContent = 'Place';
 
   const movesHeaderElement = document.createElement('th');
-
   movesHeaderElement.textContent = 'Moves';
 
   const dateHeaderElement = document.createElement('th');
-
   dateHeaderElement.textContent = 'Date';
 
   tableRowElement.append(
@@ -64,15 +61,12 @@ function createLeaderboardRow(gameResult, place) {
   const tableRowElement = document.createElement('tr');
 
   const placeElement = document.createElement('td');
-
   placeElement.textContent = place;
 
   const movesElement = document.createElement('td');
-
   movesElement.textContent = gameResult.movesCount;
 
   const dateElement = document.createElement('td');
-
   dateElement.textContent = formatPlayedDate(gameResult.playedAt);
 
   tableRowElement.append(placeElement, movesElement, dateElement);
@@ -97,8 +91,9 @@ function createLeaderboardBody(gameResults) {
 function createLeaderboardTable(gameResults) {
   const tableElement = document.createElement('table');
 
-  const tableHeadElement = document.createElement('thead');
+  tableElement.classList.add('leaderboard-table');
 
+  const tableHeadElement = document.createElement('thead');
   const tableHeaderRowElement = createLeaderboardHeader();
 
   tableHeadElement.append(tableHeaderRowElement);
@@ -116,6 +111,7 @@ export function renderLeaderboard(resultsElement, gameResults) {
   if (gameResults.length === 0) {
     const noResultsElement = document.createElement('p');
 
+    noResultsElement.classList.add('leaderboard-empty');
     noResultsElement.textContent = 'No results yet.';
 
     resultsElement.append(noResultsElement);

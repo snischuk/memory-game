@@ -12,7 +12,10 @@ import {
 
 import { createVictoryModal } from './ui/victory-modal.js';
 
-import { createLeaderboardModal, renderLeaderboard } from './ui/leaderboard.js';
+import {
+  createLeaderboardModal,
+  renderLeaderboard,
+} from './ui/leaderboard-modal.js';
 
 import { openModal, closeModal } from './ui/modals.js';
 

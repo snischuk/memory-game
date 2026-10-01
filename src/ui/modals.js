@@ -4,6 +4,7 @@ export function setPageScrollLocked(isLocked) {
 
 export function openModal(modalElement) {
   setPageScrollLocked(true);
+
   modalElement.showModal();
 }
 
@@ -17,6 +18,8 @@ export function closeModal(modalElement) {
 
 export function createModal(contentElements) {
   const modalElement = document.createElement('dialog');
+
+  modalElement.classList.add('modal');
 
   modalElement.append(...contentElements);
 

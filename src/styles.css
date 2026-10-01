@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+:root {
+  --color-background: #5b5bf7;
+  --color-background-dark: #3434a8;
+  --color-primary: #ffe066;
+  --color-primary-dark: #ffca3a;
+  --color-primary-hover: #fff0a3;
+  --color-card-back: #292966;
+  --color-card-front: #ffe066;
+  --color-text-light: #ffffff;
+  --color-text-dark: #252525;
+  --color-glass: rgb(255 255 255 / 12%);
+  --color-glass-light: rgb(255 255 255 / 8%);
+  --color-glass-hover: rgb(255 255 255 / 20%);
+  --color-border: rgb(255 255 255 / 25%);
+  --color-backdrop: rgb(20 20 60 / 60%);
+  --border-radius: 0.9rem;
+  --page-padding: 1rem;
+  --game-width: 32.5rem;
+  --card-gap: clamp(0.5rem, 2vw, 0.9rem);
+  --layout-gap: 2rem;
+  --modal-padding: 1.5rem;
+  --shadow-glow: 0 0 1.5rem rgb(255 224 102 / 35%);
+  --shadow-card: 0 0.5rem 1.5rem rgb(0 0 0 / 25%);
+  --shadow-button: 0 0.35rem 1rem rgb(0 0 0 / 20%);
+  --transition-fast: 0.15s ease;
+  --transition-card: 0.6s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100dvh;
+  padding: var(--page-padding);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--layout-gap);
+  background:
+    radial-gradient(circle at top, rgb(255 255 255 / 15%), transparent 35%),
+    linear-gradient(
+      135deg,
+      var(--color-background),
+      var(--color-background-dark)
+    );
+  font-family: 'Poppins', sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: min(100%, var(--game-width));
+}
+
+.button {
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-glass);
+  color: var(--color-text-light);
+  backdrop-filter: blur(0.75rem);
+  font-size: 1rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: var(--shadow-button);
+  transition:
+    transform var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.button:hover {
+  background-color: var(--color-glass-hover);
+  box-shadow: var(--shadow-glow);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--card-gap);
+  width: min(100%, var(--game-width));
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform var(--transition-card);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: inherit;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: 700;
+  backface-visibility: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.card-back {
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 12%), rgb(255 255 255 / 3%)),
+    var(--color-card-back);
+  color: var(--color-primary);
+  text-shadow: 0 0 0.75rem rgb(255 224 102 / 60%);
+}
+
+.card-front {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: var(--color-text-dark);
+  box-shadow:
+    0 0 1.5rem rgb(255 224 102 / 35%),
+    var(--shadow-card);
+  transform: rotateY(180deg);
+}
+
+.card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card:not(.is-flipped):hover .card-inner {
+  box-shadow: var(--shadow-glow);
+}
+
+.card:active {
+  transform: scale(0.96);
+}
+
+.counter {
+  color: var(--color-text-light);
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  text-shadow: 0 0 0.75rem rgb(255 255 255 / 30%);
+}
+
+.modal {
+  width: min(90%, 28rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-glass);
+  color: var(--color-text-light);
+  backdrop-filter: blur(1rem);
+  box-shadow: var(--shadow-card);
+}
+
+.modal::backdrop {
+  background: var(--color-backdrop);
+  backdrop-filter: blur(0.35rem);
+}
+
+.leaderboard-content,
+.victory-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--modal-padding);
+}
+
+.leaderboard-content {
+  gap: 2rem;
+}
+
+.victory-content {
+  gap: 1rem;
+}
+
+.leaderboard-results {
+  width: 100%;
+}
+
+.leaderboard-table {
+  width: 100%;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  border-collapse: collapse;
+  background: var(--color-glass-light);
+  color: var(--color-text-light);
+  box-shadow: var(--shadow-card);
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+}
+
+.leaderboard-table th {
+  background: var(--color-glass);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-shadow: 0 0 0.6rem rgb(255 224 102 / 40%);
+}
+
+.leaderboard-table td {
+  font-size: 0.95rem;
+}
+
+.leaderboard-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaderboard-table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: var(--color-glass-hover);
+}
+
+.leaderboard-empty {
+  color: var(--color-text-light);
+  text-align: center;
+  opacity: 0.8;
+}

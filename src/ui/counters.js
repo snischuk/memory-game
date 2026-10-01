@@ -1,7 +1,9 @@
 export function createCounters() {
   const movesCountElement = document.createElement('div');
-
   const matchedPairsCountElement = document.createElement('div');
+
+  movesCountElement.classList.add('counter');
+  matchedPairsCountElement.classList.add('counter');
 
   return {
     movesCountElement,

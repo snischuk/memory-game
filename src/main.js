@@ -1,3 +1,4 @@
+import './styles.css';
 import { createGameController } from './game-controller.js';
 
 import { CARD_VALUES } from './constants.js';
