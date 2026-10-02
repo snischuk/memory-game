@@ -12,7 +12,7 @@ const leaderboardController = createLeaderboardController();
 function finishGame(completedGame) {
   const movesCount = completedGame.gameState.movesCount;
 
-  leaderboardController.saveGameResult(movesCount);
+  leaderboardController.saveGameResultToLeaderboard(movesCount);
 
   gameUI.showVictoryModal(movesCount);
 }
