@@ -18,19 +18,17 @@ export function createGameUI() {
     headerElement,
     newGameButtonElement: newGameHeaderButtonElement,
     leaderboardButtonElement,
+    audioButtonElement,
   } = createHeader();
 
   const gameBoardElement = createGameBoard();
-
   const { movesCountElement, matchedPairsCountElement } = createCounters();
-
   const {
     modalElement: victoryModalElement,
     movesCountElement: victoryMovesCountElement,
     newGameButtonElement,
     closeButtonElement: closeVictoryButtonElement,
   } = createVictoryModal();
-
   const {
     modalElement: leaderboardModalElement,
     resultsElement: leaderboardResultsElement,
@@ -58,9 +56,7 @@ export function createGameUI() {
     const totalPairsCount = getTotalPairsCount(game.cards);
 
     renderCards(gameBoardElement, game.cards, game.gameState);
-
     renderMovesCount(movesCountElement, game.gameState.movesCount);
-
     renderMatchedPairsCount(
       matchedPairsCountElement,
       game.gameState.matchedCardIds,
@@ -70,7 +66,6 @@ export function createGameUI() {
 
   function showVictoryModal(movesCount) {
     victoryMovesCountElement.textContent = `Moves: ${movesCount}`;
-
     openModal(victoryModalElement);
   }
 
@@ -80,7 +75,6 @@ export function createGameUI() {
 
   function showLeaderboard(gameResults) {
     renderLeaderboard(leaderboardResultsElement, gameResults);
-
     openModal(leaderboardModalElement);
   }
 
@@ -95,6 +89,7 @@ export function createGameUI() {
     showLeaderboard,
     closeLeaderboard,
     newGameHeaderButtonElement,
+    audioButtonElement,
     newGameButtonElement,
     leaderboardButtonElement,
     closeVictoryButtonElement,

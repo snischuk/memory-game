@@ -6,15 +6,23 @@ export function createHeader() {
   newGameButtonElement.classList.add('button');
   newGameButtonElement.textContent = 'New Game';
 
+  const audioButtonElement = document.createElement('button');
+  audioButtonElement.classList.add('button');
+
   const leaderboardButtonElement = document.createElement('button');
   leaderboardButtonElement.classList.add('button');
   leaderboardButtonElement.textContent = 'Leaderboard';
 
-  headerElement.append(newGameButtonElement, leaderboardButtonElement);
+  headerElement.append(
+    newGameButtonElement,
+    audioButtonElement,
+    leaderboardButtonElement,
+  );
 
   return {
     headerElement,
     newGameButtonElement,
+    audioButtonElement,
     leaderboardButtonElement,
   };
 }

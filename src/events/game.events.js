@@ -2,7 +2,25 @@ export function setupGameUIEvents({
   gameUI,
   gameController,
   leaderboardController,
+  startBackgroundMusic,
+  toggleAudio,
+  getAudioMutedState,
 }) {
+  document.addEventListener(
+    'click',
+    () => {
+      startBackgroundMusic();
+    },
+    { once: true },
+  );
+
+  gameUI.audioButtonElement.addEventListener('click', () => {
+    const isAudioMuted = toggleAudio();
+    gameUI.audioButtonElement.textContent = isAudioMuted ? '🔇' : '🔊';
+  });
+
+  gameUI.audioButtonElement.textContent = getAudioMutedState() ? '🔇' : '🔊';
+
   gameUI.gameBoardElement.addEventListener('click', (event) => {
     const cardElement = event.target.closest('[data-card-id]');
 
@@ -11,6 +29,7 @@ export function setupGameUIEvents({
     }
 
     const cardId = Number(cardElement.dataset.cardId);
+
     gameController.handleCardClick(cardId);
   });
 
@@ -27,7 +46,6 @@ export function setupGameUIEvents({
 
   gameUI.leaderboardButtonElement.addEventListener('click', () => {
     const leaderboardResults = leaderboardController.getLeaderboardResults();
-
     gameUI.showLeaderboard(leaderboardResults);
   });
 

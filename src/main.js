@@ -4,22 +4,16 @@ import { createLeaderboardController } from './controller/leaderboard.controller
 import { CARD_VALUES } from './core/game/game.constants.js';
 import { setupGameUIEvents } from './events/game.events.js';
 import {
+  getAudioMutedState,
   playCardFlipBackSound,
   playCardFlipSound,
   startBackgroundMusic,
+  toggleAudio,
 } from './audio/game.audio.js';
 import { createGameUI } from './ui/game.ui.js';
 
 const gameUI = createGameUI();
 const leaderboardController = createLeaderboardController();
-
-document.addEventListener(
-  'click',
-  () => {
-    startBackgroundMusic();
-  },
-  { once: true },
-);
 
 function finishGame(completedGame) {
   const movesCount = completedGame.gameState.movesCount;
@@ -39,4 +33,7 @@ setupGameUIEvents({
   gameUI,
   gameController,
   leaderboardController,
+  startBackgroundMusic,
+  toggleAudio,
+  getAudioMutedState,
 });
