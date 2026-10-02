@@ -1,5 +1,5 @@
 import './styles.css';
-import musicFile from './audio/breaking_bad.mp3';
+import musicFile from './assets/breaking_bad.mp3';
 import { createGameController } from './controller/game.controller.js';
 import { createLeaderboardController } from './controller/leaderboard.controller.js';
 import { CARD_VALUES } from './core/game/game.constants.js';
