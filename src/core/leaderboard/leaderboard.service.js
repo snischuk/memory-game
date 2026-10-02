@@ -4,33 +4,22 @@ import {
   sortGameResults,
   getTopGameResults,
 } from './leaderboard.actions.js';
+import { localStorageService } from '../../utils/local-storage.js';
 
-const leaderboardStorageKey = 'memoryGameResults';
+const LEADERBOARD_STORAGE_KEY = 'memory-game-leaderboard-results';
 
 export function saveGameResults(gameResults) {
-  localStorage.setItem(leaderboardStorageKey, JSON.stringify(gameResults));
+  localStorageService.save(LEADERBOARD_STORAGE_KEY, gameResults);
 }
 
 export function loadGameResults() {
-  const savedGameResults = localStorage.getItem(leaderboardStorageKey);
-
-  if (!savedGameResults) {
-    return [];
-  }
-
-  try {
-    return JSON.parse(savedGameResults);
-  } catch {
-    return [];
-  }
+  return localStorageService.load(LEADERBOARD_STORAGE_KEY, []);
 }
 
 export function saveGameResult(movesCount) {
   const gameResult = createGameResult(movesCount);
   const savedGameResults = loadGameResults();
-
   const updatedGameResults = addGameResult(savedGameResults, gameResult);
-
   const sortedGameResults = sortGameResults(updatedGameResults);
 
   saveGameResults(sortedGameResults);
@@ -40,7 +29,6 @@ export function saveGameResult(movesCount) {
 
 export function getLeaderboard() {
   const gameResults = loadGameResults();
-
   const sortedGameResults = sortGameResults(gameResults);
 
   return getTopGameResults(sortedGameResults);
