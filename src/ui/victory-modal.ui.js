@@ -1,4 +1,4 @@
-import { createModal } from './modals.js';
+import { createModal } from './modals.ui.js';
 
 export function createVictoryModal() {
   const titleElement = document.createElement('h2');

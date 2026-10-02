@@ -1,4 +1,24 @@
-import { selectCard, getOpenedCards, getTurnResult, playTurn } from './game.js';
+import {
+  createCards,
+  shuffleCards,
+  selectCard,
+  getOpenedCards,
+  getTurnResult,
+  playTurn,
+} from './game.actions.js';
+
+import { createGameState } from './game.state.js';
+
+export function createGame(cardValues) {
+  const cards = createCards(cardValues);
+  const shuffledCards = shuffleCards(cards);
+  const gameState = createGameState();
+
+  return {
+    cards: shuffledCards,
+    gameState,
+  };
+}
 
 export function handleCardSelection(game, cardId) {
   const gameState = selectCard(game.gameState, cardId);

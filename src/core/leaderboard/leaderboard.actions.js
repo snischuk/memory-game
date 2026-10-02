@@ -1,6 +1,4 @@
-import { MAX_LEADERBOARD_RESULTS } from './constants.js';
-
-const leaderboardStorageKey = 'memoryGameResults';
+import { MAX_LEADERBOARD_RESULTS } from '../game/game.constants.js';
 
 export function createGameResult(movesCount) {
   return {
@@ -11,24 +9,6 @@ export function createGameResult(movesCount) {
 
 export function addGameResult(gameResults, gameResult) {
   return [...gameResults, gameResult];
-}
-
-export function saveGameResults(gameResults) {
-  localStorage.setItem(leaderboardStorageKey, JSON.stringify(gameResults));
-}
-
-export function loadGameResults() {
-  const savedGameResults = localStorage.getItem(leaderboardStorageKey);
-
-  if (!savedGameResults) {
-    return [];
-  }
-
-  try {
-    return JSON.parse(savedGameResults);
-  } catch {
-    return [];
-  }
 }
 
 export function sortGameResults(gameResults) {

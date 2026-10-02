@@ -1,13 +1,9 @@
 import './styles.css';
-import { createGameController } from './game-controller.js';
-
-import { CARD_VALUES } from './constants.js';
-
-import { createGameUI } from './game-ui.js';
-
-import { createLeaderboardController } from './leaderboard-controller.js';
-
-import { setupGameUIEvents } from './game-ui-events.js';
+import { createGameController } from './controller/game.controller.js';
+import { createLeaderboardController } from './controller/leaderboard.controller.js';
+import { CARD_VALUES } from './core/game/game.constants.js';
+import { setupGameUIEvents } from './events/game.events.js';
+import { createGameUI } from './ui/game.ui.js';
 
 const gameUI = createGameUI();
 

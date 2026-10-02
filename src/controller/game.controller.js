@@ -1,8 +1,13 @@
-import { createGame } from './game.js';
+import {
+  createGame,
+  handleCardSelection,
+  finishTurn,
+} from '../core/game/game.service.js';
 
-import { handleCardSelection, finishTurn } from './game-flow.js';
-
-import { TURN_RESULT, MISMATCH_CLOSE_DELAY } from './constants.js';
+import {
+  TURN_RESULT,
+  MISMATCH_CLOSE_DELAY,
+} from '../core/game/game.constants.js';
 
 export function createGameController({
   cardValues,
@@ -12,6 +17,7 @@ export function createGameController({
   let currentGame = createGame(cardValues);
 
   let isInputLocked = false;
+
   let mismatchCloseTimerId = null;
 
   renderGame(currentGame);
@@ -36,6 +42,7 @@ export function createGameController({
 
     if (turnResult === TURN_RESULT.MATCHED) {
       finishMatchedTurn();
+
       return;
     }
 

@@ -1,4 +1,4 @@
-import { createModal } from './modals.js';
+import { createModal } from './modals.ui.js';
 
 export function createLeaderboardModal() {
   const titleElement = document.createElement('h2');

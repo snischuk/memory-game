@@ -1,4 +1,11 @@
-import { TURN_RESULT } from './constants.js';
+import { TURN_RESULT } from './game.constants.js';
+
+import {
+  openCard,
+  closeOpenedCards,
+  addMatchedCards,
+  incrementMovesCount,
+} from './game.state.js';
 
 export function createCards(cardValues) {
   const cards = [];
@@ -38,31 +45,9 @@ export function shuffleCards(cards) {
   return shuffledCards;
 }
 
-export function createGameState() {
-  return {
-    openedCardIds: [],
-    matchedCardIds: [],
-    movesCount: 0,
-    isGameComplete: false,
-  };
-}
-
-export function createGame(cardValues) {
-  const cards = createCards(cardValues);
-  const shuffledCards = shuffleCards(cards);
-  const gameState = createGameState();
-
-  return {
-    cards: shuffledCards,
-    gameState,
-  };
-}
-
 export function checkCardCanBeOpened(openedCardIds, matchedCardIds, cardId) {
   const canOpenAnotherCard = openedCardIds.length < 2;
-
   const isCardAlreadyOpened = openedCardIds.includes(cardId);
-
   const isCardAlreadyMatched = matchedCardIds.includes(cardId);
 
   return canOpenAnotherCard && !isCardAlreadyOpened && !isCardAlreadyMatched;
@@ -80,48 +65,8 @@ export function getTurnResult(firstCard, secondCard) {
   return TURN_RESULT.NOT_MATCHED;
 }
 
-export function addMatchedCards(matchedCardIds, firstCardId, secondCardId) {
-  return [...matchedCardIds, firstCardId, secondCardId];
-}
-
-export function closeOpenedCards() {
-  return [];
-}
-
-export function incrementMovesCount(movesCount) {
-  return movesCount + 1;
-}
-
-export function playTurn(gameState, cards, turnResult) {
-  const firstCardId = gameState.openedCardIds[0];
-
-  const secondCardId = gameState.openedCardIds[1];
-
-  const movesCount = incrementMovesCount(gameState.movesCount);
-
-  let matchedCardIds = gameState.matchedCardIds;
-
-  if (turnResult === TURN_RESULT.MATCHED) {
-    matchedCardIds = addMatchedCards(matchedCardIds, firstCardId, secondCardId);
-  }
-
-  const isGameComplete = checkGameComplete(matchedCardIds, cards);
-
-  return {
-    ...gameState,
-    openedCardIds: closeOpenedCards(),
-    matchedCardIds,
-    movesCount,
-    isGameComplete,
-  };
-}
-
 export function checkGameComplete(matchedCardIds, cards) {
   return matchedCardIds.length === cards.length;
-}
-
-export function openCard(openedCardIds, cardId) {
-  return [...openedCardIds, cardId];
 }
 
 export function getCardById(cards, cardId) {
@@ -130,7 +75,6 @@ export function getCardById(cards, cardId) {
 
 export function getOpenedCards(cards, openedCardIds) {
   const firstCard = getCardById(cards, openedCardIds[0]);
-
   const secondCard = getCardById(cards, openedCardIds[1]);
 
   return {
@@ -155,6 +99,29 @@ export function selectCard(gameState, cardId) {
   return {
     ...gameState,
     openedCardIds,
+  };
+}
+
+export function playTurn(gameState, cards, turnResult) {
+  const firstCardId = gameState.openedCardIds[0];
+  const secondCardId = gameState.openedCardIds[1];
+
+  const movesCount = incrementMovesCount(gameState.movesCount);
+
+  let matchedCardIds = gameState.matchedCardIds;
+
+  if (turnResult === TURN_RESULT.MATCHED) {
+    matchedCardIds = addMatchedCards(matchedCardIds, firstCardId, secondCardId);
+  }
+
+  const isGameComplete = checkGameComplete(matchedCardIds, cards);
+
+  return {
+    ...gameState,
+    openedCardIds: closeOpenedCards(),
+    matchedCardIds,
+    movesCount,
+    isGameComplete,
   };
 }
 

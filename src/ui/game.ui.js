@@ -1,23 +1,17 @@
-import { getTotalPairsCount } from './game.js';
-
-import { createHeader } from './ui/header.js';
-
-import { createGameBoard, renderCards } from './ui/cards.js';
-
+import { getTotalPairsCount } from '../core/game/game.actions.js';
+import { createHeader } from './header.ui.js';
+import { createGameBoard, renderCards } from './cards.ui.js';
 import {
   createCounters,
   renderMovesCount,
   renderMatchedPairsCount,
-} from './ui/counters.js';
-
-import { createVictoryModal } from './ui/victory-modal.js';
-
+} from './counters.ui.js';
+import { createVictoryModal } from './victory-modal.ui.js';
 import {
   createLeaderboardModal,
   renderLeaderboard,
-} from './ui/leaderboard-modal.js';
-
-import { openModal, closeModal } from './ui/modals.js';
+} from './leaderboard-modal.ui.js';
+import { openModal, closeModal } from './modals.ui.js';
 
 export function createGameUI() {
   const {
@@ -93,7 +87,6 @@ export function createGameUI() {
     closeVictoryModal,
     showLeaderboard,
     closeLeaderboard,
-
     newGameHeaderButtonElement,
     newGameButtonElement,
     leaderboardButtonElement,
