@@ -13,11 +13,11 @@ export function createGameController({
   cardValues,
   renderGame,
   onGameComplete,
+  onCardFlip,
+  onCardFlipBack,
 }) {
   let currentGame = createGame(cardValues);
-
   let isInputLocked = false;
-
   let mismatchCloseTimerId = null;
 
   renderGame(currentGame);
@@ -33,8 +33,8 @@ export function createGameController({
     );
 
     currentGame = updatedGame;
-
     renderGame(currentGame);
+    onCardFlip();
 
     if (!turnResult) {
       return;
@@ -42,7 +42,6 @@ export function createGameController({
 
     if (turnResult === TURN_RESULT.MATCHED) {
       finishMatchedTurn();
-
       return;
     }
 
@@ -64,8 +63,8 @@ export function createGameController({
 
     mismatchCloseTimerId = setTimeout(() => {
       currentGame = finishTurn(currentGame, TURN_RESULT.NOT_MATCHED);
-
       renderGame(currentGame);
+      onCardFlipBack();
 
       mismatchCloseTimerId = null;
       isInputLocked = false;

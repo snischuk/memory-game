@@ -11,20 +11,17 @@ export function setupGameUIEvents({
     }
 
     const cardId = Number(cardElement.dataset.cardId);
-
     gameController.handleCardClick(cardId);
   });
 
   gameUI.newGameHeaderButtonElement.addEventListener('click', () => {
     gameController.startNewGame();
-
     gameUI.closeVictoryModal();
     gameUI.closeLeaderboard();
   });
 
   gameUI.newGameButtonElement.addEventListener('click', () => {
     gameController.startNewGame();
-
     gameUI.closeVictoryModal();
   });
 
