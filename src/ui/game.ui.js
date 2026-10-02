@@ -37,12 +37,19 @@ export function createGameUI() {
     closeButtonElement: closeLeaderboardButtonElement,
   } = createLeaderboardModal();
 
-  document.body.prepend(headerElement);
+  const mainElement = document.createElement('main');
+  mainElement.classList.add('main');
 
-  document.body.append(
+  mainElement.append(
     gameBoardElement,
     movesCountElement,
     matchedPairsCountElement,
+  );
+
+  document.body.prepend(headerElement);
+
+  document.body.append(
+    mainElement,
     victoryModalElement,
     leaderboardModalElement,
   );

@@ -48,9 +48,9 @@ body {
   padding: var(--page-padding);
   display: flex;
   flex-direction: column;
+  gap: var(--layout-gap);
   align-items: center;
   justify-content: center;
-  gap: var(--layout-gap);
   overflow: hidden;
   background: radial-gradient(
     circle at center,
@@ -65,26 +65,20 @@ body::before,
 body::after {
   content: '';
   position: fixed;
-
   width: 55vw;
   height: 55vw;
   max-width: 40rem;
   max-height: 40rem;
-
   border-radius: 50%;
-
   pointer-events: none;
   z-index: 0;
-
   filter: blur(4rem);
-
   opacity: 0.75;
 }
 
 body::before {
   top: -20%;
   left: -15%;
-
   background: radial-gradient(
     circle,
     rgb(210 235 70 / 75%) 0%,
@@ -92,14 +86,12 @@ body::before {
     rgb(70 140 70 / 20%) 60%,
     transparent 75%
   );
-
   animation: smoke-top-left 14s ease-in-out infinite alternate;
 }
 
 body::after {
   right: -15%;
   bottom: -20%;
-
   background: radial-gradient(
     circle,
     rgb(150 215 70 / 70%) 0%,
@@ -107,16 +99,22 @@ body::after {
     rgb(50 120 70 / 20%) 60%,
     transparent 75%
   );
-
   animation: smoke-bottom-right 18s ease-in-out infinite alternate;
 }
 
 .header,
-.game-board,
-.counter,
+.main,
 .modal {
   position: relative;
   z-index: 1;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--layout-gap);
+  width: 100%;
 }
 
 @keyframes smoke-top-left {
