@@ -15,28 +15,14 @@ export function createGameBoard() {
       const isCardOpened = gameState.openedCardIds.includes(card.id);
       const isCardMatched = gameState.matchedCardIds.includes(card.id);
 
-      const cardElement = cardElements.get(card.id);
+      let cardElement = cardElements.get(card.id);
 
       if (!cardElement) {
-        const newCardElement = createCard(card);
-
-        gameBoardElement.append(newCardElement);
-        cardElements.set(card.id, newCardElement);
-
-        updateCardElement(
-          newCardElement,
-          isCardOpened,
-          isCardMatched,
-          card.value,
-        );
-
-        previousCardsState.set(card.id, {
-          isCardOpened,
-          isCardMatched,
-        });
-
-        return;
+        cardElement = createCard(card);
+        cardElements.set(card.id, cardElement);
       }
+
+      gameBoardElement.append(cardElement);
 
       const previousCardState = previousCardsState.get(card.id);
 
