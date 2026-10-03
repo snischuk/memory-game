@@ -1,3 +1,5 @@
+import './modal.ui.css';
+
 export function setPageScrollLocked(isLocked) {
   document.body.style.overflow = isLocked ? 'hidden' : '';
 }

@@ -1,0 +1,77 @@
+body::before,
+body::after {
+  content: '';
+
+  position: fixed;
+
+  width: 55vw;
+  height: 55vw;
+  max-width: 40rem;
+  max-height: 40rem;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+  z-index: 0;
+
+  filter: blur(4rem);
+  opacity: 0.75;
+}
+
+body::before {
+  top: -20%;
+  left: -15%;
+
+  background: radial-gradient(
+    circle,
+    rgb(210 235 70 / 75%) 0%,
+    rgb(150 205 60 / 45%) 35%,
+    rgb(70 140 70 / 20%) 60%,
+    transparent 75%
+  );
+
+  animation: smoke-top-left 14s ease-in-out infinite alternate;
+}
+
+body::after {
+  right: -15%;
+  bottom: -20%;
+
+  background: radial-gradient(
+    circle,
+    rgb(150 215 70 / 70%) 0%,
+    rgb(90 175 70 / 45%) 35%,
+    rgb(50 120 70 / 20%) 60%,
+    transparent 75%
+  );
+
+  animation: smoke-bottom-right 18s ease-in-out infinite alternate;
+}
+
+@keyframes smoke-top-left {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.9);
+  }
+
+  50% {
+    transform: translate3d(15%, 10%, 0) scale(1.15);
+  }
+
+  100% {
+    transform: translate3d(5%, 25%, 0) scale(1);
+  }
+}
+
+@keyframes smoke-bottom-right {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-15%, -10%, 0) scale(1.2);
+  }
+
+  100% {
+    transform: translate3d(-5%, -20%, 0) scale(0.95);
+  }
+}

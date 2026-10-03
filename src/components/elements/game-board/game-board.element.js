@@ -1,0 +1,90 @@
+import './game-board.element.css';
+
+import { createCard } from '../../ui/card/card.ui.js';
+
+export function createGameBoard() {
+  const gameBoardElement = document.createElement('div');
+
+  gameBoardElement.classList.add('game-board');
+
+  const cardElements = new Map();
+  const previousCardsState = new Map();
+
+  function render(cards, gameState) {
+    cards.forEach((card) => {
+      const isCardOpened = gameState.openedCardIds.includes(card.id);
+      const isCardMatched = gameState.matchedCardIds.includes(card.id);
+
+      const cardElement = cardElements.get(card.id);
+
+      if (!cardElement) {
+        const newCardElement = createCard(card);
+
+        gameBoardElement.append(newCardElement);
+        cardElements.set(card.id, newCardElement);
+
+        updateCardElement(
+          newCardElement,
+          isCardOpened,
+          isCardMatched,
+          card.value,
+        );
+
+        previousCardsState.set(card.id, {
+          isCardOpened,
+          isCardMatched,
+        });
+
+        return;
+      }
+
+      const previousCardState = previousCardsState.get(card.id);
+
+      updateCardElement(
+        cardElement,
+        isCardOpened,
+        isCardMatched,
+        card.value,
+        previousCardState,
+      );
+
+      previousCardsState.set(card.id, {
+        isCardOpened,
+        isCardMatched,
+      });
+    });
+  }
+
+  return {
+    gameBoardElement,
+    render,
+  };
+}
+
+function updateCardElement(
+  cardElement,
+  isCardOpened,
+  isCardMatched,
+  cardValue,
+  previousCardState,
+) {
+  const shouldFlipCard = isCardOpened || isCardMatched;
+
+  const wasCardFlipped =
+    previousCardState &&
+    (previousCardState.isCardOpened || previousCardState.isCardMatched);
+
+  const shouldFlipCardChange =
+    !previousCardState || shouldFlipCard !== wasCardFlipped;
+
+  if (!shouldFlipCardChange) {
+    return;
+  }
+
+  cardElement.classList.toggle('is-flipped', shouldFlipCard);
+
+  cardElement.setAttribute(
+    'aria-label',
+    shouldFlipCard ? `Card ${cardValue}` : 'Hidden card',
+  );
+}

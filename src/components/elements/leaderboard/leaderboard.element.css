@@ -1,0 +1,68 @@
+.leaderboard-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 2rem;
+
+  padding: var(--modal-padding);
+}
+
+.leaderboard-results {
+  width: 100%;
+}
+
+.leaderboard-empty {
+  color: var(--color-text-light);
+  text-align: center;
+  opacity: 0.8;
+}
+
+.leaderboard-table {
+  overflow: hidden;
+  width: 100%;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  border-collapse: collapse;
+
+  background: var(--color-glass-light);
+  color: var(--color-text-light);
+
+  box-shadow: var(--shadow-card);
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.7rem 0.9rem;
+
+  border-bottom: 1px solid var(--color-border);
+
+  text-align: center;
+}
+
+.leaderboard-table th {
+  background: var(--color-glass);
+
+  color: var(--color-primary);
+
+  font-weight: 700;
+
+  text-shadow: 0 0 0.6rem rgb(197 217 47 / 40%);
+}
+
+.leaderboard-table td {
+  font-size: 0.95rem;
+}
+
+.leaderboard-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.leaderboard-table tbody tr {
+  transition: background-color var(--transition-fast);
+}
+
+.leaderboard-table tbody tr:hover {
+  background-color: var(--color-glass-hover);
+}

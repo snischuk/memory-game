@@ -1,19 +1,18 @@
-import { getTotalPairsCount } from '../core/game/game.actions.js';
-import { createHeader } from './header.ui.js';
-import { createGameBoard, renderCards } from './cards.ui.js';
-import {
-  createCounters,
-  renderMovesCount,
-  renderMatchedPairsCount,
-} from './counters.ui.js';
-import { createVictoryModal } from './victory-modal.ui.js';
-import {
-  createLeaderboardModal,
-  renderLeaderboard,
-} from './leaderboard-modal.ui.js';
-import { openModal, closeModal } from './modals.ui.js';
+import './game.container.css';
 
-export function createGameUI() {
+import { createHeader } from '../../elements/header/header.element.js';
+
+import { createMovesCounterContainer } from '../moves-counter/moves-counter.container.js';
+import { createMatchCounterContainer } from '../match-counter/match-counter.container.js';
+
+import { createVictoryModal } from '../../elements/victory-modal/victory-modal.element.js';
+import { createGameBoard } from '../../elements/game-board/game-board.element.js';
+import { createLeaderboard } from '../../elements/leaderboard/leaderboard.element.js';
+import { createLeaderboardModal } from '../../elements/leaderboard-modal/leaderboard-modal.element.js';
+
+import { openModal, closeModal } from '../../ui/modal/modal.ui.js';
+
+export function createGameContainer() {
   const {
     headerElement,
     newGameButtonElement: newGameHeaderButtonElement,
@@ -21,27 +20,36 @@ export function createGameUI() {
     audioButtonElement,
   } = createHeader();
 
-  const gameBoardElement = createGameBoard();
-  const { movesCountElement, matchedPairsCountElement } = createCounters();
+  const { gameBoardElement, render: renderGameBoard } = createGameBoard();
+
+  const { movesCounterElement, render: renderMovesCounter } =
+    createMovesCounterContainer();
+
+  const { matchCounterElement, render: renderMatchCounter } =
+    createMatchCounterContainer();
+
   const {
     modalElement: victoryModalElement,
     movesCountElement: victoryMovesCountElement,
     newGameButtonElement,
     closeButtonElement: closeVictoryButtonElement,
   } = createVictoryModal();
+
+  const { leaderboardElement, render: renderLeaderboard } = createLeaderboard();
+
   const {
     modalElement: leaderboardModalElement,
-    resultsElement: leaderboardResultsElement,
     closeButtonElement: closeLeaderboardButtonElement,
-  } = createLeaderboardModal();
+  } = createLeaderboardModal(leaderboardElement);
 
   const mainElement = document.createElement('main');
+
   mainElement.classList.add('main');
 
   mainElement.append(
     gameBoardElement,
-    movesCountElement,
-    matchedPairsCountElement,
+    movesCounterElement,
+    matchCounterElement,
   );
 
   document.body.prepend(headerElement);
@@ -53,19 +61,14 @@ export function createGameUI() {
   );
 
   function renderGame(game) {
-    const totalPairsCount = getTotalPairsCount(game.cards);
-
-    renderCards(gameBoardElement, game.cards, game.gameState);
-    renderMovesCount(movesCountElement, game.gameState.movesCount);
-    renderMatchedPairsCount(
-      matchedPairsCountElement,
-      game.gameState.matchedCardIds,
-      totalPairsCount,
-    );
+    renderGameBoard(game.cards, game.gameState);
+    renderMovesCounter(game);
+    renderMatchCounter(game);
   }
 
   function showVictoryModal(movesCount) {
     victoryMovesCountElement.textContent = `Moves: ${movesCount}`;
+
     openModal(victoryModalElement);
   }
 
@@ -74,7 +77,8 @@ export function createGameUI() {
   }
 
   function showLeaderboard(gameResults) {
-    renderLeaderboard(leaderboardResultsElement, gameResults);
+    renderLeaderboard(gameResults);
+
     openModal(leaderboardModalElement);
   }
 

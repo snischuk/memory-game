@@ -1,5 +1,5 @@
-export function setupGameUIEvents({
-  gameUI,
+export function setupGameContainerEvents({
+  gameContainer,
   gameController,
   leaderboardController,
   startBackgroundMusic,
@@ -14,14 +14,17 @@ export function setupGameUIEvents({
     { once: true },
   );
 
-  gameUI.audioButtonElement.addEventListener('click', () => {
+  gameContainer.audioButtonElement.addEventListener('click', () => {
     const isAudioMuted = toggleAudio();
-    gameUI.audioButtonElement.textContent = isAudioMuted ? '🔇' : '🔊';
+
+    gameContainer.audioButtonElement.textContent = isAudioMuted ? '🔇' : '🔊';
   });
 
-  gameUI.audioButtonElement.textContent = getAudioMutedState() ? '🔇' : '🔊';
+  gameContainer.audioButtonElement.textContent = getAudioMutedState()
+    ? '🔇'
+    : '🔊';
 
-  gameUI.gameBoardElement.addEventListener('click', (event) => {
+  gameContainer.gameBoardElement.addEventListener('click', (event) => {
     const cardElement = event.target.closest('[data-card-id]');
 
     if (!cardElement) {
@@ -33,27 +36,28 @@ export function setupGameUIEvents({
     gameController.handleCardClick(cardId);
   });
 
-  gameUI.newGameHeaderButtonElement.addEventListener('click', () => {
+  gameContainer.newGameHeaderButtonElement.addEventListener('click', () => {
     gameController.startNewGame();
-    gameUI.closeVictoryModal();
-    gameUI.closeLeaderboard();
+    gameContainer.closeVictoryModal();
+    gameContainer.closeLeaderboard();
   });
 
-  gameUI.newGameButtonElement.addEventListener('click', () => {
+  gameContainer.newGameButtonElement.addEventListener('click', () => {
     gameController.startNewGame();
-    gameUI.closeVictoryModal();
+    gameContainer.closeVictoryModal();
   });
 
-  gameUI.leaderboardButtonElement.addEventListener('click', () => {
+  gameContainer.leaderboardButtonElement.addEventListener('click', () => {
     const leaderboardResults = leaderboardController.getLeaderboardResults();
-    gameUI.showLeaderboard(leaderboardResults);
+
+    gameContainer.showLeaderboard(leaderboardResults);
   });
 
-  gameUI.closeVictoryButtonElement.addEventListener('click', () => {
-    gameUI.closeVictoryModal();
+  gameContainer.closeVictoryButtonElement.addEventListener('click', () => {
+    gameContainer.closeVictoryModal();
   });
 
-  gameUI.closeLeaderboardButtonElement.addEventListener('click', () => {
-    gameUI.closeLeaderboard();
+  gameContainer.closeLeaderboardButtonElement.addEventListener('click', () => {
+    gameContainer.closeLeaderboard();
   });
 }

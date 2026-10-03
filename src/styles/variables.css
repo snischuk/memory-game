@@ -1,0 +1,34 @@
+:root {
+  --color-background: #263d24;
+  --color-background-dark: #101b10;
+
+  --color-primary: #c5d92f;
+  --color-primary-dark: #8fa51f;
+  --color-primary-hover: #e0ed63;
+
+  --color-card-back: #172719;
+  --color-card-front: #c5d92f;
+
+  --color-text-light: #f2f0d0;
+  --color-text-dark: #172017;
+
+  --color-glass: rgb(220 235 150 / 10%);
+  --color-glass-light: rgb(220 235 150 / 6%);
+  --color-glass-hover: rgb(220 235 150 / 18%);
+  --color-border: rgb(197 217 47 / 30%);
+  --color-backdrop: rgb(5 12 5 / 70%);
+
+  --border-radius: 0.9rem;
+  --page-padding: 1rem;
+  --game-width: 32.5rem;
+  --card-gap: clamp(0.5rem, 2vw, 0.9rem);
+  --layout-gap: 2rem;
+  --modal-padding: 1.5rem;
+
+  --shadow-glow: 0 0 1.5rem rgb(197 217 47 / 35%);
+  --shadow-card: 0 0.5rem 1.5rem rgb(0 0 0 / 35%);
+  --shadow-button: 0 0.35rem 1rem rgb(0 0 0 / 25%);
+
+  --transition-fast: 0.15s ease;
+  --transition-card: 0.6s ease;
+}

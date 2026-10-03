@@ -1,8 +1,12 @@
-import './styles.css';
+import './styles/index.css';
+
 import { createGameController } from './controller/game.controller.js';
 import { createLeaderboardController } from './controller/leaderboard.controller.js';
+
 import { CARD_VALUES } from './core/game/game.constants.js';
-import { setupGameUIEvents } from './events/game.events.js';
+
+import { setupGameContainerEvents } from './events/game.events.js';
+
 import {
   getAudioMutedState,
   playCardFlipBackSound,
@@ -10,27 +14,31 @@ import {
   startBackgroundMusic,
   toggleAudio,
 } from './audio/game.audio.js';
-import { createGameUI } from './ui/game.ui.js';
 
-const gameUI = createGameUI();
+import { createGameContainer } from './components/containers/game/game.container.js';
+
+const gameContainer = createGameContainer();
+
 const leaderboardController = createLeaderboardController();
 
 function finishGame(completedGame) {
   const movesCount = completedGame.gameState.movesCount;
+
   leaderboardController.saveGameResultToLeaderboard(movesCount);
-  gameUI.showVictoryModal(movesCount);
+
+  gameContainer.showVictoryModal(movesCount);
 }
 
 const gameController = createGameController({
   cardValues: CARD_VALUES,
-  renderGame: gameUI.renderGame,
+  renderGame: gameContainer.renderGame,
   onGameComplete: finishGame,
   onCardFlip: playCardFlipSound,
   onCardFlipBack: playCardFlipBackSound,
 });
 
-setupGameUIEvents({
-  gameUI,
+setupGameContainerEvents({
+  gameContainer,
   gameController,
   leaderboardController,
   startBackgroundMusic,

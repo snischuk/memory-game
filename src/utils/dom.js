@@ -39,10 +39,3 @@ export function createElement(
 export function createElementFactory(tagName) {
   return (options = {}) => createElement(tagName, options);
 }
-
-export const createButton = createElementFactory('button');
-export const createDiv = createElementFactory('div');
-export const createH1 = createElementFactory('h1');
-export const createImg = createElementFactory('img');
-export const createMain = createElementFactory('main');
-export const createP = createElementFactory('p');

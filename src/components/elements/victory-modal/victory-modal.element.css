@@ -1,0 +1,25 @@
+.victory-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: var(--modal-padding);
+}
+
+.victory-heading-2 {
+  color: var(--color-text-light);
+  font-size: 1.75rem;
+  text-align: center;
+}
+
+.victory-moves {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.victory-new-game-button,
+.victory-close-button {
+  width: 14rem;
+  height: 2.75rem;
+}

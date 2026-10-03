@@ -1,0 +1,68 @@
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: var(--border-radius);
+  background: transparent;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform var(--transition-card);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: inherit;
+  font-size: clamp(1.25rem, 5vw, 2rem);
+  font-weight: 700;
+  backface-visibility: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.card-back {
+  background:
+    linear-gradient(135deg, rgb(220 235 150 / 12%), rgb(220 235 150 / 3%)),
+    var(--color-card-back);
+  color: var(--color-primary);
+  text-shadow: 0 0 0.75rem rgb(197 217 47 / 60%);
+}
+
+.card-front {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary),
+    var(--color-primary-dark)
+  );
+  color: var(--color-text-dark);
+  box-shadow:
+    0 0 1.5rem rgb(197 217 47 / 35%),
+    var(--shadow-card);
+  transform: rotateY(180deg);
+}
+
+.card.is-flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+@media (any-hover: hover) {
+  .card:not(.is-flipped):hover .card-inner {
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+.card:active {
+  transform: scale(0.96);
+}
