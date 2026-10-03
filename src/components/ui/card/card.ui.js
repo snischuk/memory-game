@@ -1,4 +1,4 @@
-import './card.css';
+import './card.ui.css';
 
 import { createElement } from '../../../utils/dom.js';
 

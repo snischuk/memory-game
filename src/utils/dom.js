@@ -35,7 +35,3 @@ export function createElement(
 
   return element;
 }
-
-export function createElementFactory(tagName) {
-  return (options = {}) => createElement(tagName, options);
-}

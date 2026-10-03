@@ -1,13 +1,10 @@
 :root {
   --color-background: #263d24;
-  --color-background-dark: #101b10;
 
   --color-primary: #c5d92f;
   --color-primary-dark: #8fa51f;
-  --color-primary-hover: #e0ed63;
 
   --color-card-back: #172719;
-  --color-card-front: #c5d92f;
 
   --color-text-light: #f2f0d0;
   --color-text-dark: #172017;
