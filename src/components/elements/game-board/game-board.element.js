@@ -10,7 +10,21 @@ export function createGameBoard() {
   const cardElements = new Map();
   const previousCardsState = new Map();
 
+  let previousCardOrder = [];
+
   function render(cards, gameState) {
+    const currentCardOrder = cards.map((card) => card.id);
+
+    const hasCardOrderChanged = !areArraysEqual(
+      currentCardOrder,
+      previousCardOrder,
+    );
+
+    if (hasCardOrderChanged) {
+      synchronizeCardOrder(cards);
+      previousCardOrder = currentCardOrder;
+    }
+
     cards.forEach((card) => {
       const isCardOpened = gameState.openedCardIds.includes(card.id);
       const isCardMatched = gameState.matchedCardIds.includes(card.id);
@@ -21,8 +35,6 @@ export function createGameBoard() {
         cardElement = createCard(card);
         cardElements.set(card.id, cardElement);
       }
-
-      gameBoardElement.append(cardElement);
 
       const previousCardState = previousCardsState.get(card.id);
 
@@ -38,6 +50,19 @@ export function createGameBoard() {
         isCardOpened,
         isCardMatched,
       });
+    });
+  }
+
+  function synchronizeCardOrder(cards) {
+    cards.forEach((card) => {
+      let cardElement = cardElements.get(card.id);
+
+      if (!cardElement) {
+        cardElement = createCard(card);
+        cardElements.set(card.id, cardElement);
+      }
+
+      gameBoardElement.append(cardElement);
     });
   }
 
@@ -73,4 +98,12 @@ function updateCardElement(
     'aria-label',
     shouldFlipCard ? `Card ${cardValue}` : 'Hidden card',
   );
+}
+
+function areArraysEqual(firstArray, secondArray) {
+  if (firstArray.length !== secondArray.length) {
+    return false;
+  }
+
+  return firstArray.every((value, index) => value === secondArray[index]);
 }
