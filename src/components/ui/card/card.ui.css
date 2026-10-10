@@ -6,8 +6,12 @@
   border: 0;
   border-radius: var(--border-radius);
   background: transparent;
-  cursor: pointer;
+  cursor: default;
   perspective: 1000px;
+}
+
+.card:not(.is-flipped) {
+  cursor: pointer;
 }
 
 .card-inner {
@@ -63,6 +67,6 @@
   }
 }
 
-.card:active {
+.card:not(.is-flipped):active {
   transform: scale(0.96);
 }

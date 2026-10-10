@@ -32,6 +32,10 @@ export function createGameController({
       cardId,
     );
 
+    if (updatedGame.gameState === currentGame.gameState) {
+      return;
+    }
+
     currentGame = updatedGame;
     renderGame(currentGame);
     onCardFlip();
