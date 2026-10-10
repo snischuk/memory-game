@@ -13,7 +13,24 @@ export function saveGameResults(gameResults) {
 }
 
 export function loadGameResults() {
-  return localStorageService.load(LEADERBOARD_STORAGE_KEY, []);
+  const gameResults = localStorageService.load(LEADERBOARD_STORAGE_KEY, []);
+
+  if (!Array.isArray(gameResults)) {
+    return [];
+  }
+
+  return gameResults.filter(isValidGameResult);
+}
+
+function isValidGameResult(gameResult) {
+  return (
+    gameResult !== null &&
+    typeof gameResult === 'object' &&
+    Number.isFinite(gameResult.movesCount) &&
+    gameResult.movesCount >= 0 &&
+    typeof gameResult.playedAt === 'string' &&
+    !Number.isNaN(Date.parse(gameResult.playedAt))
+  );
 }
 
 export function saveGameResult(movesCount) {
