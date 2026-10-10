@@ -4,16 +4,14 @@ import {
   sortGameResults,
   getTopGameResults,
 } from './leaderboard.actions.js';
-import { localStorageService } from '../../utils/local-storage.js';
-
-const LEADERBOARD_STORAGE_KEY = 'memory-game-leaderboard-results';
+import { memoryGameStorageService } from '../../utils/local-storage.js';
 
 export function saveGameResults(gameResults) {
-  return localStorageService.save(LEADERBOARD_STORAGE_KEY, gameResults);
+  return memoryGameStorageService.update({ leaderboard: gameResults });
 }
 
 export function loadGameResults() {
-  const gameResults = localStorageService.load(LEADERBOARD_STORAGE_KEY, []);
+  const { leaderboard: gameResults } = memoryGameStorageService.load();
 
   if (!Array.isArray(gameResults)) {
     return [];

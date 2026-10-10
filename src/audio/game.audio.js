@@ -1,15 +1,13 @@
 import backgroundMusicFile from '../assets/breaking_bad.mp3';
 import cardFlipSoundFile from '../assets/sound-flip-card.mp3';
 import cardFlipBackSoundFile from '../assets/sound-flip-back-card.mp3';
-import { localStorageService } from '../utils/local-storage.js';
+import { memoryGameStorageService } from '../utils/local-storage.js';
 
 const backgroundMusic = new Audio(backgroundMusicFile);
 const cardFlipSound = new Audio(cardFlipSoundFile);
 const cardFlipBackSound = new Audio(cardFlipBackSoundFile);
 
-const AUDIO_MUTE_STORAGE_KEY = 'memory-game-audio-muted';
-
-let isAudioMuted = localStorageService.load(AUDIO_MUTE_STORAGE_KEY, false);
+let isAudioMuted = memoryGameStorageService.load().settings.audioMuted;
 
 backgroundMusic.loop = true;
 backgroundMusic.volume = 0.1;
@@ -45,7 +43,9 @@ export function playCardFlipBackSound() {
 export function toggleAudio() {
   isAudioMuted = !isAudioMuted;
 
-  localStorageService.save(AUDIO_MUTE_STORAGE_KEY, isAudioMuted);
+  memoryGameStorageService.update({
+    settings: { audioMuted: isAudioMuted },
+  });
 
   if (isAudioMuted) {
     backgroundMusic.pause();
