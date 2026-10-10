@@ -31,6 +31,7 @@ export function createGameContainer() {
   const {
     modalElement: victoryModalElement,
     movesCountElement: victoryMovesCountElement,
+    saveStatusElement: victorySaveStatusElement,
     newGameButtonElement,
     closeButtonElement: closeVictoryButtonElement,
   } = createVictoryModal();
@@ -66,8 +67,12 @@ export function createGameContainer() {
     renderMatchCounter(game);
   }
 
-  function showVictoryModal(movesCount) {
+  function showVictoryModal(movesCount, { isSaved } = {}) {
     victoryMovesCountElement.textContent = `Moves: ${movesCount}`;
+
+    victorySaveStatusElement.textContent = isSaved
+      ? ''
+      : 'Your result could not be saved to the leaderboard.';
 
     openModal(victoryModalElement);
   }

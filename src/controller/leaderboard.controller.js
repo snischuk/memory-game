@@ -5,7 +5,7 @@ import {
 
 export function createLeaderboardController() {
   function saveGameResultToLeaderboard(movesCount) {
-    saveGameResult(movesCount);
+    return saveGameResult(movesCount);
   }
 
   function getLeaderboardResults() {

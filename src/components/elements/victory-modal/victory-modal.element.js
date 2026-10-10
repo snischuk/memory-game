@@ -23,6 +23,10 @@ export function createVictoryModal() {
     classes: ['victory-moves'],
   });
 
+  const saveStatusElement = createParagraph({
+    classes: ['victory-save-status'],
+  });
+
   const newGameButtonElement = createButton({
     classes: ['victory-new-game-button'],
     textContent: NEW_GAME_BUTTON_TEXT,
@@ -40,6 +44,7 @@ export function createVictoryModal() {
   contentElement.append(
     titleElement,
     movesCountElement,
+    saveStatusElement,
     newGameButtonElement,
     closeButtonElement,
   );
@@ -49,6 +54,7 @@ export function createVictoryModal() {
   return {
     modalElement,
     movesCountElement,
+    saveStatusElement,
     newGameButtonElement,
     closeButtonElement,
   };

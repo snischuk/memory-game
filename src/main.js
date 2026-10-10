@@ -23,10 +23,10 @@ const leaderboardController = createLeaderboardController();
 
 function finishGame(completedGame) {
   const movesCount = completedGame.gameState.movesCount;
+  const { isSaved } =
+    leaderboardController.saveGameResultToLeaderboard(movesCount);
 
-  leaderboardController.saveGameResultToLeaderboard(movesCount);
-
-  gameContainer.showVictoryModal(movesCount);
+  gameContainer.showVictoryModal(movesCount, { isSaved });
 }
 
 const gameController = createGameController({

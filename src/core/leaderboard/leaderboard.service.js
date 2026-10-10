@@ -9,7 +9,7 @@ import { localStorageService } from '../../utils/local-storage.js';
 const LEADERBOARD_STORAGE_KEY = 'memory-game-leaderboard-results';
 
 export function saveGameResults(gameResults) {
-  localStorageService.save(LEADERBOARD_STORAGE_KEY, gameResults);
+  return localStorageService.save(LEADERBOARD_STORAGE_KEY, gameResults);
 }
 
 export function loadGameResults() {
@@ -38,10 +38,12 @@ export function saveGameResult(movesCount) {
   const savedGameResults = loadGameResults();
   const updatedGameResults = addGameResult(savedGameResults, gameResult);
   const sortedGameResults = sortGameResults(updatedGameResults);
+  const isSaved = saveGameResults(sortedGameResults);
 
-  saveGameResults(sortedGameResults);
-
-  return sortedGameResults;
+  return {
+    gameResults: sortedGameResults,
+    isSaved,
+  };
 }
 
 export function getLeaderboard() {
