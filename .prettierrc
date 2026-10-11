@@ -1,0 +1,29 @@
+{
+  "arrowParens": "avoid",
+  "importOrder": [
+    "<THIRD_PARTY_MODULES>",
+    "^@/core/",
+    "^@/utils/",
+    "^@/infrastructure/",
+    "^@/services/",
+    "^@/controller/",
+    "^@/i18n/",
+    "^@/components/ui/",
+    "^@/components/elements/",
+    "^@/components/containers/",
+    "^@/components/(.*)$",
+    "^@/app/",
+    "^@/assets/",
+    "^\\.\\./",
+    "^\\./"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "printWidth": 80,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "useTabs": false
+}
