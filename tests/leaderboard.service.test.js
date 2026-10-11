@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
+
 import { isValidGameResult } from '../src/core/leaderboard/is-valid-game-result.util.js'
 import { sortGameResults } from '../src/core/leaderboard/leaderboard.logic.js'
 import { LeaderboardService } from '../src/services/leaderboard.service.js'

@@ -1,6 +1,7 @@
 import backgroundMusicFile from '@/assets/breaking_bad.mp3'
-import cardFlipSoundFile from '@/assets/sound-flip-card.mp3'
 import cardFlipBackSoundFile from '@/assets/sound-flip-back-card.mp3'
+import cardFlipSoundFile from '@/assets/sound-flip-card.mp3'
+
 import {
   BACKGROUND_MUSIC_VOLUME,
   CARD_FLIP_SOUND_VOLUME,
@@ -8,16 +9,16 @@ import {
 } from './game-audio.constants.js'
 
 function playAudio(audio) {
-  try {
-    const playResult = audio.play()
+  let playResult
 
-    if (playResult && typeof playResult.catch === 'function') {
-      playResult.catch(() => {
-        // Audio is optional and browsers can block playback.
-      })
-    }
+  try {
+    playResult = audio.play()
   } catch {
-    // Audio is optional and browsers can block playback.
+    playResult = undefined
+  }
+
+  if (playResult && typeof playResult.catch === 'function') {
+    playResult.catch(() => undefined)
   }
 }
 

@@ -1,6 +1,6 @@
-import './header.element.css'
-
 import { createButton } from '@/components/ui/button/button.ui.js'
+
+import './header.element.css'
 
 export function createHeader(messages) {
   const headerElement = document.createElement('header')

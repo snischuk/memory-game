@@ -1,10 +1,10 @@
+import { isValidGameResult } from '../core/leaderboard/is-valid-game-result.util.js'
+import { addGameResult } from '../core/leaderboard/leaderboard.actions.js'
 import {
   createGameResult,
-  sortGameResults,
-  getTopGameResults
+  getTopGameResults,
+  sortGameResults
 } from '../core/leaderboard/leaderboard.logic.js'
-import { addGameResult } from '../core/leaderboard/leaderboard.actions.js'
-import { isValidGameResult } from '../core/leaderboard/is-valid-game-result.util.js'
 
 export class LeaderboardService {
   constructor(storageService, now = () => new Date()) {

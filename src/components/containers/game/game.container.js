@@ -1,17 +1,20 @@
-import './game.container.css'
-
-import { createHeader } from '@/components/elements/header/header.element.js'
-import { createVictoryModal } from '@/components/elements/victory-modal/victory-modal.element.js'
-import { createLeaderboard } from '@/components/elements/leaderboard/leaderboard.element.js'
-import { createLeaderboardModal } from '@/components/elements/leaderboard-modal/leaderboard-modal.element.js'
-import { openModal, closeModal } from '@/components/ui/modal/modal.ui.js'
-import { createGameBoardContainer } from '@/components/containers/game-board/game-board.container.js'
 import {
   getMatchedPairsCount,
   getTotalPairsCount
 } from '@/core/game/game.logic.js'
-import { createMovesCounter } from '@/components/elements/moves-counter/moves-counter.element.js'
+
+import { closeModal, openModal } from '@/components/ui/modal/modal.ui.js'
+
+import { createHeader } from '@/components/elements/header/header.element.js'
+import { createLeaderboardModal } from '@/components/elements/leaderboard-modal/leaderboard-modal.element.js'
+import { createLeaderboard } from '@/components/elements/leaderboard/leaderboard.element.js'
 import { createMatchCounter } from '@/components/elements/match-counter/match-counter.element.js'
+import { createMovesCounter } from '@/components/elements/moves-counter/moves-counter.element.js'
+import { createVictoryModal } from '@/components/elements/victory-modal/victory-modal.element.js'
+
+import { createGameBoardContainer } from '@/components/containers/game-board/game-board.container.js'
+
+import './game.container.css'
 
 export function createGameContainer(messages) {
   const {

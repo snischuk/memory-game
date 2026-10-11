@@ -1,5 +1,5 @@
-import './leaderboard.element.css'
 import { formatPlayedDate } from './format-played-date.util.js'
+import './leaderboard.element.css'
 
 const FIRST_LEADERBOARD_PLACE = 1
 

@@ -1,13 +1,12 @@
+import { playTurn, selectCard } from './game.actions.js'
+import { CARDS_PER_TURN } from './game.constants.js'
 import {
   createCards,
-  shuffleCards,
   getOpenedCards,
-  getTurnResult
+  getTurnResult,
+  shuffleCards
 } from './game.logic.js'
-
-import { playTurn, selectCard } from './game.actions.js'
 import { createGameState } from './game.state.js'
-import { CARDS_PER_TURN } from './game.constants.js'
 
 export class GameService {
   constructor(random = Math.random) {

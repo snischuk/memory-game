@@ -1,10 +1,10 @@
 import { TURN_RESULT } from './game.constants.js'
 import { checkCardCanBeOpened, checkGameComplete } from './game.rules.js'
 import {
-  openCard,
-  closeOpenedCards,
   addMatchedCards,
-  incrementMovesCount
+  closeOpenedCards,
+  incrementMovesCount,
+  openCard
 } from './game.state.js'
 
 export function selectCard(gameState, cardId) {

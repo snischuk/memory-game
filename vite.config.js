@@ -1,5 +1,5 @@
+import { URL, fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   base: '/memory-game/',

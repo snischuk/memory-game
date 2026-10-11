@@ -1,13 +1,19 @@
-import { createGameController } from '@/controller/game.controller.js'
-import { createLeaderboardController } from '@/controller/leaderboard.controller.js'
 import { CARD_VALUES } from '@/core/game/game.constants.js'
 import { GameService } from '@/core/game/game.service.js'
+
+import { LocalStorageService } from '@/infrastructure/storage/local-storage.service.js'
+
 import { GameAudioService } from '@/services/game-audio.service.js'
 import { LeaderboardService } from '@/services/leaderboard.service.js'
 import { MemoryGameStorageService } from '@/services/memory-game-storage.service.js'
-import { LocalStorageService } from '@/infrastructure/storage/local-storage.service.js'
-import { createGameContainer } from '@/components/containers/game/game.container.js'
+
+import { createGameController } from '@/controller/game.controller.js'
+import { createLeaderboardController } from '@/controller/leaderboard.controller.js'
+
 import { messages } from '@/i18n/index.js'
+
+import { createGameContainer } from '@/components/containers/game/game.container.js'
+
 import { setupGameContainerEvents } from './setup-game-events.js'
 
 export function initializeApp() {

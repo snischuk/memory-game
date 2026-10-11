@@ -1,6 +1,7 @@
+import { areArraysEqual } from '@/utils/are-arrays-equal.util.js'
+
 import { createGameBoardElement } from '@/components/elements/game-board/game-board.element.js'
 import { createGameCard } from '@/components/elements/game-card/game-card.element.js'
-import { areArraysEqual } from '@/utils/are-arrays-equal.util.js'
 import { updateGameCardElement } from '@/components/elements/game-card/update-game-card-element.util.js'
 
 export function createGameBoardContainer(messages) {
