@@ -1,5 +1,5 @@
-import { TURN_RESULT } from '../core/game/game.constants.js';
-import { MISMATCH_CLOSE_DELAY } from './game-controller.constants.js';
+import { TURN_RESULT } from '../core/game/game.constants.js'
+import { MISMATCH_CLOSE_DELAY } from './game-controller.constants.js'
 
 export function createGameController({
   cardValues,
@@ -10,83 +10,80 @@ export function createGameController({
   gameService,
   mismatchCloseDelay = MISMATCH_CLOSE_DELAY,
   schedule = setTimeout,
-  cancelScheduled = clearTimeout,
+  cancelScheduled = clearTimeout
 }) {
-  let currentGame = gameService.createGame(cardValues);
-  let isInputLocked = false;
-  let mismatchCloseTimerId = null;
+  let currentGame = gameService.createGame(cardValues)
+  let isInputLocked = false
+  let mismatchCloseTimerId = null
 
-  renderGame(currentGame);
+  renderGame(currentGame)
 
   function handleCardClick(cardId) {
     if (isInputLocked) {
-      return;
+      return
     }
 
     const { game: updatedGame, turnResult } = gameService.handleCardSelection(
       currentGame,
-      cardId,
-    );
+      cardId
+    )
 
     if (updatedGame.gameState === currentGame.gameState) {
-      return;
+      return
     }
 
-    currentGame = updatedGame;
-    renderGame(currentGame);
-    onCardFlip();
+    currentGame = updatedGame
+    renderGame(currentGame)
+    onCardFlip()
 
     if (!turnResult) {
-      return;
+      return
     }
 
     if (turnResult === TURN_RESULT.MATCHED) {
-      finishMatchedTurn();
-      return;
+      finishMatchedTurn()
+      return
     }
 
-    startMismatchTimer();
+    startMismatchTimer()
   }
 
   function finishMatchedTurn() {
-    currentGame = gameService.finishTurn(currentGame, TURN_RESULT.MATCHED);
+    currentGame = gameService.finishTurn(currentGame, TURN_RESULT.MATCHED)
 
-    renderGame(currentGame);
+    renderGame(currentGame)
 
     if (currentGame.gameState.isGameComplete) {
-      onGameComplete(currentGame);
+      onGameComplete(currentGame)
     }
   }
 
   function startMismatchTimer() {
-    isInputLocked = true;
+    isInputLocked = true
 
     mismatchCloseTimerId = schedule(() => {
-      currentGame = gameService.finishTurn(
-        currentGame,
-        TURN_RESULT.NOT_MATCHED,
-      );
-      renderGame(currentGame);
-      onCardFlipBack();
+      currentGame = gameService.finishTurn(currentGame, TURN_RESULT.NOT_MATCHED)
+      renderGame(currentGame)
+      onCardFlipBack()
 
-      mismatchCloseTimerId = null;
-      isInputLocked = false;
-    }, mismatchCloseDelay);
+      mismatchCloseTimerId = null
+      isInputLocked = false
+    }, mismatchCloseDelay)
   }
 
   function startNewGame() {
-    cancelScheduled(mismatchCloseTimerId);
+    cancelScheduled(mismatchCloseTimerId)
 
-    mismatchCloseTimerId = null;
-    isInputLocked = false;
+    mismatchCloseTimerId = null
+    isInputLocked = false
 
-    currentGame = gameService.createGame(cardValues);
+    currentGame = gameService.createGame(cardValues)
 
-    renderGame(currentGame);
+    renderGame(currentGame)
   }
 
   return {
     handleCardClick,
-    startNewGame,
-  };
+    startNewGame
+  }
 }

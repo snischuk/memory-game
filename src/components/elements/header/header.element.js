@@ -1,32 +1,32 @@
-import './header.element.css';
+import './header.element.css'
 
-import { createButton } from '../../ui/button/button.ui.js';
+import { createButton } from '../../ui/button/button.ui.js'
 
 export function createHeader(messages) {
-  const headerElement = document.createElement('header');
+  const headerElement = document.createElement('header')
 
-  headerElement.classList.add('header');
+  headerElement.classList.add('header')
 
   const newGameButtonElement = createButton({
-    textContent: messages.buttons.newGame,
-  });
+    textContent: messages.buttons.newGame
+  })
 
-  const audioButtonElement = createButton();
+  const audioButtonElement = createButton()
 
   const leaderboardButtonElement = createButton({
-    textContent: messages.buttons.leaderboard,
-  });
+    textContent: messages.buttons.leaderboard
+  })
 
   headerElement.append(
     newGameButtonElement,
     audioButtonElement,
-    leaderboardButtonElement,
-  );
+    leaderboardButtonElement
+  )
 
   return {
     headerElement,
     newGameButtonElement,
     audioButtonElement,
-    leaderboardButtonElement,
-  };
+    leaderboardButtonElement
+  }
 }

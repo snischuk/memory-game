@@ -22,8 +22,8 @@ const BOOLEAN_ATTRIBUTES = new Set([
   'readonly',
   'required',
   'reversed',
-  'selected',
-]);
+  'selected'
+])
 
 export function createElement(
   tagName,
@@ -34,52 +34,52 @@ export function createElement(
     properties = {},
     dataset = {},
     events = {},
-    children = [],
-  } = {},
+    children = []
+  } = {}
 ) {
-  const element = document.createElement(tagName);
+  const element = document.createElement(tagName)
 
   if (classes.length > 0) {
-    element.classList.add(...classes);
+    element.classList.add(...classes)
   }
 
   if (textContent !== undefined) {
-    element.textContent = textContent;
+    element.textContent = textContent
   }
 
-  Object.assign(element, properties);
+  Object.assign(element, properties)
 
   Object.entries(attributes).forEach(([attributeName, attributeValue]) => {
     if (/^on/i.test(attributeName)) {
-      throw new TypeError('Use events to register event listeners.');
+      throw new TypeError('Use events to register event listeners.')
     }
 
     if (attributeValue === null || attributeValue === undefined) {
-      return;
+      return
     }
 
     if (
       typeof attributeValue === 'boolean' &&
       BOOLEAN_ATTRIBUTES.has(attributeName.toLowerCase())
     ) {
-      element.toggleAttribute(attributeName, attributeValue);
-      return;
+      element.toggleAttribute(attributeName, attributeValue)
+      return
     }
 
-    element.setAttribute(attributeName, String(attributeValue));
-  });
+    element.setAttribute(attributeName, String(attributeValue))
+  })
 
   Object.entries(dataset).forEach(([dataName, dataValue]) => {
-    element.dataset[dataName] = dataValue;
-  });
+    element.dataset[dataName] = dataValue
+  })
 
   Object.entries(events).forEach(([eventName, eventHandler]) => {
-    element.addEventListener(eventName, eventHandler);
-  });
+    element.addEventListener(eventName, eventHandler)
+  })
 
-  const childElements = Array.isArray(children) ? children : [children];
+  const childElements = Array.isArray(children) ? children : [children]
 
-  element.append(...childElements.filter((child) => child != null));
+  element.append(...childElements.filter(child => child != null))
 
-  return element;
+  return element
 }

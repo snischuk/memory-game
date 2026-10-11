@@ -1,3 +1,3 @@
-import { enMessages } from './locales/en.js';
+import { enMessages } from './locales/en.js'
 
-export const messages = enMessages;
+export const messages = enMessages

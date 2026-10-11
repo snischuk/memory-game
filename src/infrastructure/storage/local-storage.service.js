@@ -1,53 +1,53 @@
 export class LocalStorageService {
   constructor(storage = globalThis.localStorage) {
-    this.storage = storage;
+    this.storage = storage
   }
 
   read(key) {
-    let storedValue;
+    let storedValue
 
     try {
-      storedValue = this.storage.getItem(key);
+      storedValue = this.storage.getItem(key)
     } catch {
-      return { success: false, exists: null, value: undefined };
+      return { success: false, exists: null, value: undefined }
     }
 
     if (storedValue === null) {
-      return { success: true, exists: false, value: undefined };
+      return { success: true, exists: false, value: undefined }
     }
 
     try {
       return {
         success: true,
         exists: true,
-        value: JSON.parse(storedValue),
-      };
+        value: JSON.parse(storedValue)
+      }
     } catch {
-      return { success: false, exists: true, value: undefined };
+      return { success: false, exists: true, value: undefined }
     }
   }
 
   set(key, value) {
     try {
-      const serializedValue = JSON.stringify(value);
+      const serializedValue = JSON.stringify(value)
 
       if (serializedValue === undefined) {
-        return false;
+        return false
       }
 
-      this.storage.setItem(key, serializedValue);
-      return true;
+      this.storage.setItem(key, serializedValue)
+      return true
     } catch {
-      return false;
+      return false
     }
   }
 
   remove(key) {
     try {
-      this.storage.removeItem(key);
-      return true;
+      this.storage.removeItem(key)
+      return true
     } catch {
-      return false;
+      return false
     }
   }
 }

@@ -1,1 +1,1 @@
-export const MAX_LEADERBOARD_RESULTS = 10;
+export const MAX_LEADERBOARD_RESULTS = 10

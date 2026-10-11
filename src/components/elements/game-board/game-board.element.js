@@ -1,9 +1,9 @@
-import './game-board.element.css';
+import './game-board.element.css'
 
 export function createGameBoardElement() {
-  const gameBoardElement = document.createElement('div');
+  const gameBoardElement = document.createElement('div')
 
-  gameBoardElement.classList.add('game-board');
+  gameBoardElement.classList.add('game-board')
 
-  return gameBoardElement;
+  return gameBoardElement
 }

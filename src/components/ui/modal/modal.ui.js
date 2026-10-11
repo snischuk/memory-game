@@ -1,69 +1,69 @@
-import './modal.ui.css';
+import './modal.ui.css'
 
-let previousBodyOverflow;
-let nextModalTitleId = 0;
-let isPageScrollLocked = false;
+let previousBodyOverflow
+let nextModalTitleId = 0
+let isPageScrollLocked = false
 
 function setPageScrollLocked(isLocked) {
   if (isLocked && !isPageScrollLocked) {
-    previousBodyOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    isPageScrollLocked = true;
-    return;
+    previousBodyOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    isPageScrollLocked = true
+    return
   }
 
   if (isLocked) {
-    return;
+    return
   }
 
   if (!isPageScrollLocked) {
-    return;
+    return
   }
 
-  document.body.style.overflow = previousBodyOverflow ?? '';
-  previousBodyOverflow = undefined;
-  isPageScrollLocked = false;
+  document.body.style.overflow = previousBodyOverflow ?? ''
+  previousBodyOverflow = undefined
+  isPageScrollLocked = false
 }
 
 export function openModal(modalElement) {
-  modalElement.showModal();
-  setPageScrollLocked(true);
+  modalElement.showModal()
+  setPageScrollLocked(true)
 }
 
 export function closeModal(modalElement) {
   if (!modalElement.open) {
-    return;
+    return
   }
 
-  modalElement.close();
+  modalElement.close()
 }
 
 export function createModal(contentElements, labelledByElement) {
-  const modalElement = document.createElement('dialog');
+  const modalElement = document.createElement('dialog')
 
-  modalElement.classList.add('modal');
+  modalElement.classList.add('modal')
 
   if (labelledByElement) {
-    nextModalTitleId += 1;
-    const titleId = `modal-title-${nextModalTitleId}`;
+    nextModalTitleId += 1
+    const titleId = `modal-title-${nextModalTitleId}`
 
-    labelledByElement.id = titleId;
-    modalElement.setAttribute('aria-labelledby', titleId);
+    labelledByElement.id = titleId
+    modalElement.setAttribute('aria-labelledby', titleId)
   }
 
-  modalElement.append(...contentElements);
+  modalElement.append(...contentElements)
 
   modalElement.addEventListener('close', () => {
-    const hasOpenModal = document.querySelector('dialog[open]');
+    const hasOpenModal = document.querySelector('dialog[open]')
 
-    setPageScrollLocked(Boolean(hasOpenModal));
-  });
+    setPageScrollLocked(Boolean(hasOpenModal))
+  })
 
-  modalElement.addEventListener('click', (event) => {
+  modalElement.addEventListener('click', event => {
     if (event.target === modalElement) {
-      closeModal(modalElement);
+      closeModal(modalElement)
     }
-  });
+  })
 
-  return modalElement;
+  return modalElement
 }

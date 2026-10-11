@@ -4,30 +4,30 @@ export function updateGameCardElement(
   isCardMatched,
   cardValue,
   previousCardState,
-  messages,
+  messages
 ) {
-  const shouldFlipCard = isCardOpened || isCardMatched;
-  const cardValueText = String(cardValue);
-  const cardFrontElement = cardElement.querySelector('.card-front');
+  const shouldFlipCard = isCardOpened || isCardMatched
+  const cardValueText = String(cardValue)
+  const cardFrontElement = cardElement.querySelector('.card-front')
   const hasCardValueChanged =
     cardFrontElement.textContent !== cardValueText ||
-    previousCardState?.cardValue !== cardValueText;
+    previousCardState?.cardValue !== cardValueText
   const wasCardFlipped =
     previousCardState &&
-    (previousCardState.isCardOpened || previousCardState.isCardMatched);
+    (previousCardState.isCardOpened || previousCardState.isCardMatched)
   const shouldFlipCardChange =
-    !previousCardState || shouldFlipCard !== wasCardFlipped;
+    !previousCardState || shouldFlipCard !== wasCardFlipped
 
   if (!shouldFlipCardChange && !hasCardValueChanged) {
-    return;
+    return
   }
 
-  cardFrontElement.textContent = cardValueText;
-  cardElement.classList.toggle('is-flipped', shouldFlipCard);
+  cardFrontElement.textContent = cardValueText
+  cardElement.classList.toggle('is-flipped', shouldFlipCard)
   cardElement.setAttribute(
     'aria-label',
     shouldFlipCard
       ? messages.game.cardLabel(cardValue)
-      : messages.game.hiddenCard,
-  );
+      : messages.game.hiddenCard
+  )
 }

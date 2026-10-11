@@ -1,41 +1,41 @@
-import { createGameBoardElement } from '../../elements/game-board/game-board.element.js';
-import { createGameCard } from '../../elements/game-card/game-card.element.js';
-import { areArraysEqual } from '../../../utils/are-arrays-equal.util.js';
-import { updateGameCardElement } from '../../elements/game-card/update-game-card-element.util.js';
+import { createGameBoardElement } from '../../elements/game-board/game-board.element.js'
+import { createGameCard } from '../../elements/game-card/game-card.element.js'
+import { areArraysEqual } from '../../../utils/are-arrays-equal.util.js'
+import { updateGameCardElement } from '../../elements/game-card/update-game-card-element.util.js'
 
 export function createGameBoardContainer(messages) {
-  const gameBoardElement = createGameBoardElement();
+  const gameBoardElement = createGameBoardElement()
 
-  const cardElements = new Map();
-  const previousCardsState = new Map();
+  const cardElements = new Map()
+  const previousCardsState = new Map()
 
-  let previousCardOrder = [];
+  let previousCardOrder = []
 
   function render(cards, gameState) {
-    const currentCardOrder = cards.map((card) => card.id);
+    const currentCardOrder = cards.map(card => card.id)
 
     const hasCardOrderChanged = !areArraysEqual(
       currentCardOrder,
-      previousCardOrder,
-    );
+      previousCardOrder
+    )
 
     if (hasCardOrderChanged) {
-      synchronizeCardOrder(cards);
-      previousCardOrder = currentCardOrder;
+      synchronizeCardOrder(cards)
+      previousCardOrder = currentCardOrder
     }
 
-    cards.forEach((card) => {
-      const isCardOpened = gameState.openedCardIds.includes(card.id);
-      const isCardMatched = gameState.matchedCardIds.includes(card.id);
+    cards.forEach(card => {
+      const isCardOpened = gameState.openedCardIds.includes(card.id)
+      const isCardMatched = gameState.matchedCardIds.includes(card.id)
 
-      let cardElement = cardElements.get(card.id);
+      let cardElement = cardElements.get(card.id)
 
       if (!cardElement) {
-        cardElement = createGameCard(card, messages);
-        cardElements.set(card.id, cardElement);
+        cardElement = createGameCard(card, messages)
+        cardElements.set(card.id, cardElement)
       }
 
-      const previousCardState = previousCardsState.get(card.id);
+      const previousCardState = previousCardsState.get(card.id)
 
       updateGameCardElement(
         cardElement,
@@ -43,44 +43,44 @@ export function createGameBoardContainer(messages) {
         isCardMatched,
         card.value,
         previousCardState,
-        messages,
-      );
+        messages
+      )
 
       previousCardsState.set(card.id, {
         isCardOpened,
         isCardMatched,
-        cardValue: String(card.value),
-      });
-    });
+        cardValue: String(card.value)
+      })
+    })
   }
 
   function synchronizeCardOrder(cards) {
-    const activeCardIds = new Set(cards.map((card) => card.id));
-    const orderedCardElements = [];
+    const activeCardIds = new Set(cards.map(card => card.id))
+    const orderedCardElements = []
 
-    cards.forEach((card) => {
-      let cardElement = cardElements.get(card.id);
+    cards.forEach(card => {
+      let cardElement = cardElements.get(card.id)
 
       if (!cardElement) {
-        cardElement = createGameCard(card, messages);
-        cardElements.set(card.id, cardElement);
+        cardElement = createGameCard(card, messages)
+        cardElements.set(card.id, cardElement)
       }
 
-      orderedCardElements.push(cardElement);
-    });
+      orderedCardElements.push(cardElement)
+    })
 
-    gameBoardElement.replaceChildren(...orderedCardElements);
+    gameBoardElement.replaceChildren(...orderedCardElements)
 
     cardElements.forEach((cardElement, cardId) => {
       if (!activeCardIds.has(cardId)) {
-        cardElements.delete(cardId);
-        previousCardsState.delete(cardId);
+        cardElements.delete(cardId)
+        previousCardsState.delete(cardId)
       }
-    });
+    })
   }
 
   return {
     gameBoardElement,
-    render,
-  };
+    render
+  }
 }

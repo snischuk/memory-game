@@ -1,3 +1,3 @@
-export const BACKGROUND_MUSIC_VOLUME = 0.1;
-export const CARD_FLIP_SOUND_VOLUME = 0.5;
-export const INITIAL_AUDIO_PLAYBACK_TIME = 0;
+export const BACKGROUND_MUSIC_VOLUME = 0.1
+export const CARD_FLIP_SOUND_VOLUME = 0.5
+export const INITIAL_AUDIO_PLAYBACK_TIME = 0

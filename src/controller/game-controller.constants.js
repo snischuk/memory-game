@@ -1,1 +1,1 @@
-export const MISMATCH_CLOSE_DELAY = 1000;
+export const MISMATCH_CLOSE_DELAY = 1000
