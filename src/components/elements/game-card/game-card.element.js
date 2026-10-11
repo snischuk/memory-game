@@ -1,6 +1,6 @@
 import './game-card.element.css'
 
-import { createElement } from '../../../utils/create-element.util.js'
+import { createElement } from '@/utils/create-element.util.js'
 
 export function createGameCard(card, messages) {
   const cardBackElement = createElement('div', {

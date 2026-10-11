@@ -1,6 +1,6 @@
-import backgroundMusicFile from '../assets/breaking_bad.mp3'
-import cardFlipSoundFile from '../assets/sound-flip-card.mp3'
-import cardFlipBackSoundFile from '../assets/sound-flip-back-card.mp3'
+import backgroundMusicFile from '@/assets/breaking_bad.mp3'
+import cardFlipSoundFile from '@/assets/sound-flip-card.mp3'
+import cardFlipBackSoundFile from '@/assets/sound-flip-back-card.mp3'
 import {
   BACKGROUND_MUSIC_VOLUME,
   CARD_FLIP_SOUND_VOLUME,

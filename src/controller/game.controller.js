@@ -1,4 +1,4 @@
-import { TURN_RESULT } from '../core/game/game.constants.js'
+import { TURN_RESULT } from '@/core/game/game.constants.js'
 import { MISMATCH_CLOSE_DELAY } from './game-controller.constants.js'
 
 export function createGameController({
