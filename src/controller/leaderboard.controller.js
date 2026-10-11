@@ -1,15 +1,10 @@
-import {
-  saveGameResult,
-  getLeaderboard,
-} from '../core/leaderboard/leaderboard.service.js';
-
-export function createLeaderboardController() {
+export function createLeaderboardController(leaderboardService) {
   function saveGameResultToLeaderboard(movesCount) {
-    return saveGameResult(movesCount);
+    return leaderboardService.saveGameResult(movesCount);
   }
 
   function getLeaderboardResults() {
-    return getLeaderboard();
+    return leaderboardService.getLeaderboard();
   }
 
   return {

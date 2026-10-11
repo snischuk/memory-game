@@ -2,27 +2,38 @@ export function setupGameContainerEvents({
   gameContainer,
   gameController,
   leaderboardController,
-  startBackgroundMusic,
-  toggleAudio,
-  getAudioMutedState,
+  audioService,
+  messages,
+  onAudioMutedChange,
 }) {
+  function updateAudioButton() {
+    const isMuted = audioService.isMuted;
+
+    gameContainer.audioButtonElement.textContent = isMuted
+      ? messages.audio.mutedIcon
+      : messages.audio.enabledIcon;
+    gameContainer.audioButtonElement.setAttribute(
+      'aria-label',
+      isMuted ? messages.audio.enableLabel : messages.audio.muteLabel,
+    );
+  }
+
   document.addEventListener(
     'click',
     () => {
-      startBackgroundMusic();
+      audioService.startBackgroundMusic();
     },
     { once: true },
   );
 
   gameContainer.audioButtonElement.addEventListener('click', () => {
-    const isAudioMuted = toggleAudio();
+    const isAudioMuted = audioService.toggleAudio();
+    onAudioMutedChange(isAudioMuted);
 
-    gameContainer.audioButtonElement.textContent = isAudioMuted ? '🔇' : '🔊';
+    updateAudioButton();
   });
 
-  gameContainer.audioButtonElement.textContent = getAudioMutedState()
-    ? '🔇'
-    : '🔊';
+  updateAudioButton();
 
   gameContainer.gameBoardElement.addEventListener('click', (event) => {
     const cardElement = event.target.closest('[data-card-id]');

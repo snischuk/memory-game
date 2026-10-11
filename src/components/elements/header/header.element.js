@@ -1,25 +1,20 @@
 import './header.element.css';
 
-import {
-  LEADERBOARD_BUTTON_TEXT,
-  NEW_GAME_BUTTON_TEXT,
-} from '../../../constants/ui.constants.js';
-
 import { createButton } from '../../ui/button/button.ui.js';
 
-export function createHeader() {
+export function createHeader(messages) {
   const headerElement = document.createElement('header');
 
   headerElement.classList.add('header');
 
   const newGameButtonElement = createButton({
-    textContent: NEW_GAME_BUTTON_TEXT,
+    textContent: messages.buttons.newGame,
   });
 
   const audioButtonElement = createButton();
 
   const leaderboardButtonElement = createButton({
-    textContent: LEADERBOARD_BUTTON_TEXT,
+    textContent: messages.buttons.leaderboard,
   });
 
   headerElement.append(

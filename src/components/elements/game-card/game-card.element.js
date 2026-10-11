@@ -1,11 +1,11 @@
-import './card.ui.css';
+import './game-card.element.css';
 
-import { createElement } from '../../../utils/dom.js';
+import { createElement } from '../../../utils/create-element.util.js';
 
-export function createCard(card) {
+export function createGameCard(card, messages) {
   const cardBackElement = createElement('div', {
     classes: ['card-face', 'card-back'],
-    textContent: '?',
+    textContent: messages.game.cardBack,
   });
 
   const cardFrontElement = createElement('div', {

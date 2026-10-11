@@ -1,6 +1,9 @@
 import './leaderboard.element.css';
+import { formatPlayedDate } from './format-played-date.util.js';
 
-export function createLeaderboard() {
+const FIRST_LEADERBOARD_PLACE = 1;
+
+export function createLeaderboard(messages) {
   const leaderboardElement = document.createElement('div');
 
   leaderboardElement.classList.add('leaderboard-results');
@@ -12,14 +15,17 @@ export function createLeaderboard() {
       const noResultsElement = document.createElement('p');
 
       noResultsElement.classList.add('leaderboard-empty');
-      noResultsElement.textContent = 'No results yet.';
+      noResultsElement.textContent = messages.leaderboard.noResults;
 
       leaderboardElement.append(noResultsElement);
 
       return;
     }
 
-    const leaderboardTableElement = createLeaderboardTable(gameResults);
+    const leaderboardTableElement = createLeaderboardTable(
+      gameResults,
+      messages,
+    );
 
     leaderboardElement.append(leaderboardTableElement);
   }
@@ -30,13 +36,13 @@ export function createLeaderboard() {
   };
 }
 
-function createLeaderboardTable(gameResults) {
+function createLeaderboardTable(gameResults, messages) {
   const tableElement = document.createElement('table');
 
   tableElement.classList.add('leaderboard-table');
 
   const tableHeadElement = document.createElement('thead');
-  const tableHeaderRowElement = createLeaderboardHeader();
+  const tableHeaderRowElement = createLeaderboardHeader(messages);
 
   tableHeadElement.append(tableHeaderRowElement);
 
@@ -47,17 +53,17 @@ function createLeaderboardTable(gameResults) {
   return tableElement;
 }
 
-function createLeaderboardHeader() {
+function createLeaderboardHeader(messages) {
   const tableRowElement = document.createElement('tr');
 
   const placeHeaderElement = document.createElement('th');
-  placeHeaderElement.textContent = 'Place';
+  placeHeaderElement.textContent = messages.leaderboard.place;
 
   const movesHeaderElement = document.createElement('th');
-  movesHeaderElement.textContent = 'Moves';
+  movesHeaderElement.textContent = messages.leaderboard.moves;
 
   const dateHeaderElement = document.createElement('th');
-  dateHeaderElement.textContent = 'Date';
+  dateHeaderElement.textContent = messages.leaderboard.date;
 
   tableRowElement.append(
     placeHeaderElement,
@@ -72,7 +78,7 @@ function createLeaderboardBody(gameResults) {
   const tableBodyElement = document.createElement('tbody');
 
   gameResults.forEach((gameResult, index) => {
-    const place = index + 1;
+    const place = index + FIRST_LEADERBOARD_PLACE;
     const tableRowElement = createLeaderboardRow(gameResult, place);
 
     tableBodyElement.append(tableRowElement);
@@ -96,14 +102,4 @@ function createLeaderboardRow(gameResult, place) {
   tableRowElement.append(placeElement, movesElement, dateElement);
 
   return tableRowElement;
-}
-
-function formatPlayedDate(playedAt) {
-  const date = new Date(playedAt);
-
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const year = date.getFullYear();
-
-  return `${day}.${month}.${year}`;
 }

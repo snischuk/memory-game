@@ -1,13 +1,33 @@
 import './modal.ui.css';
 
-export function setPageScrollLocked(isLocked) {
-  document.body.style.overflow = isLocked ? 'hidden' : '';
+let previousBodyOverflow;
+let nextModalTitleId = 0;
+let isPageScrollLocked = false;
+
+function setPageScrollLocked(isLocked) {
+  if (isLocked && !isPageScrollLocked) {
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    isPageScrollLocked = true;
+    return;
+  }
+
+  if (isLocked) {
+    return;
+  }
+
+  if (!isPageScrollLocked) {
+    return;
+  }
+
+  document.body.style.overflow = previousBodyOverflow ?? '';
+  previousBodyOverflow = undefined;
+  isPageScrollLocked = false;
 }
 
 export function openModal(modalElement) {
-  setPageScrollLocked(true);
-
   modalElement.showModal();
+  setPageScrollLocked(true);
 }
 
 export function closeModal(modalElement) {
@@ -18,15 +38,25 @@ export function closeModal(modalElement) {
   modalElement.close();
 }
 
-export function createModal(contentElements) {
+export function createModal(contentElements, labelledByElement) {
   const modalElement = document.createElement('dialog');
 
   modalElement.classList.add('modal');
 
+  if (labelledByElement) {
+    nextModalTitleId += 1;
+    const titleId = `modal-title-${nextModalTitleId}`;
+
+    labelledByElement.id = titleId;
+    modalElement.setAttribute('aria-labelledby', titleId);
+  }
+
   modalElement.append(...contentElements);
 
   modalElement.addEventListener('close', () => {
-    setPageScrollLocked(false);
+    const hasOpenModal = document.querySelector('dialog[open]');
+
+    setPageScrollLocked(Boolean(hasOpenModal));
   });
 
   modalElement.addEventListener('click', (event) => {

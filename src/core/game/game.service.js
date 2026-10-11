@@ -1,60 +1,64 @@
 import {
   createCards,
   shuffleCards,
-  selectCard,
   getOpenedCards,
   getTurnResult,
-  playTurn,
-} from './game.actions.js';
+} from './game.logic.js';
 
+import { playTurn, selectCard } from './game.actions.js';
 import { createGameState } from './game.state.js';
+import { CARDS_PER_TURN } from './game.constants.js';
 
-export function createGame(cardValues) {
-  const cards = createCards(cardValues);
-  const shuffledCards = shuffleCards(cards);
-  const gameState = createGameState();
+export class GameService {
+  constructor(random = Math.random) {
+    this.random = random;
+  }
 
-  return {
-    cards: shuffledCards,
-    gameState,
-  };
-}
+  createGame(cardValues) {
+    const cards = createCards(cardValues);
+    const shuffledCards = shuffleCards(cards, this.random);
+    const gameState = createGameState();
 
-export function handleCardSelection(game, cardId) {
-  const gameState = selectCard(game.gameState, cardId);
-
-  const updatedGame = {
-    ...game,
-    gameState,
-  };
-
-  const hasTwoOpenedCards = gameState.openedCardIds.length === 2;
-
-  if (!hasTwoOpenedCards) {
     return {
-      game: updatedGame,
-      turnResult: null,
+      cards: shuffledCards,
+      gameState,
     };
   }
 
-  const { firstCard, secondCard } = getOpenedCards(
-    game.cards,
-    gameState.openedCardIds,
-  );
+  handleCardSelection(game, cardId) {
+    const gameState = selectCard(game.gameState, cardId);
 
-  const turnResult = getTurnResult(firstCard, secondCard);
+    const updatedGame = {
+      ...game,
+      gameState,
+    };
 
-  return {
-    game: updatedGame,
-    turnResult,
-  };
-}
+    const hasTwoOpenedCards = gameState.openedCardIds.length === CARDS_PER_TURN;
 
-export function finishTurn(game, turnResult) {
-  const gameState = playTurn(game.gameState, game.cards, turnResult);
+    if (!hasTwoOpenedCards) {
+      return {
+        game: updatedGame,
+        turnResult: null,
+      };
+    }
 
-  return {
-    ...game,
-    gameState,
-  };
+    const { firstCard, secondCard } = getOpenedCards(
+      game.cards,
+      gameState.openedCardIds,
+    );
+
+    return {
+      game: updatedGame,
+      turnResult: getTurnResult(firstCard, secondCard),
+    };
+  }
+
+  finishTurn(game, turnResult) {
+    const gameState = playTurn(game.gameState, game.cards, turnResult);
+
+    return {
+      ...game,
+      gameState,
+    };
+  }
 }

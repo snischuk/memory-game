@@ -1,13 +1,5 @@
-import {
-  createGame,
-  handleCardSelection,
-  finishTurn,
-} from '../core/game/game.service.js';
-
-import {
-  TURN_RESULT,
-  MISMATCH_CLOSE_DELAY,
-} from '../core/game/game.constants.js';
+import { TURN_RESULT } from '../core/game/game.constants.js';
+import { MISMATCH_CLOSE_DELAY } from './game-controller.constants.js';
 
 export function createGameController({
   cardValues,
@@ -15,8 +7,12 @@ export function createGameController({
   onGameComplete,
   onCardFlip,
   onCardFlipBack,
+  gameService,
+  mismatchCloseDelay = MISMATCH_CLOSE_DELAY,
+  schedule = setTimeout,
+  cancelScheduled = clearTimeout,
 }) {
-  let currentGame = createGame(cardValues);
+  let currentGame = gameService.createGame(cardValues);
   let isInputLocked = false;
   let mismatchCloseTimerId = null;
 
@@ -27,7 +23,7 @@ export function createGameController({
       return;
     }
 
-    const { game: updatedGame, turnResult } = handleCardSelection(
+    const { game: updatedGame, turnResult } = gameService.handleCardSelection(
       currentGame,
       cardId,
     );
@@ -53,7 +49,7 @@ export function createGameController({
   }
 
   function finishMatchedTurn() {
-    currentGame = finishTurn(currentGame, TURN_RESULT.MATCHED);
+    currentGame = gameService.finishTurn(currentGame, TURN_RESULT.MATCHED);
 
     renderGame(currentGame);
 
@@ -65,23 +61,26 @@ export function createGameController({
   function startMismatchTimer() {
     isInputLocked = true;
 
-    mismatchCloseTimerId = setTimeout(() => {
-      currentGame = finishTurn(currentGame, TURN_RESULT.NOT_MATCHED);
+    mismatchCloseTimerId = schedule(() => {
+      currentGame = gameService.finishTurn(
+        currentGame,
+        TURN_RESULT.NOT_MATCHED,
+      );
       renderGame(currentGame);
       onCardFlipBack();
 
       mismatchCloseTimerId = null;
       isInputLocked = false;
-    }, MISMATCH_CLOSE_DELAY);
+    }, mismatchCloseDelay);
   }
 
   function startNewGame() {
-    clearTimeout(mismatchCloseTimerId);
+    cancelScheduled(mismatchCloseTimerId);
 
     mismatchCloseTimerId = null;
     isInputLocked = false;
 
-    currentGame = createGame(cardValues);
+    currentGame = gameService.createGame(cardValues);
 
     renderGame(currentGame);
   }

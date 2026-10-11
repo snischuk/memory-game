@@ -1,19 +1,17 @@
 import './leaderboard-modal.element.css';
 
-import { CLOSE_BUTTON_TEXT } from '../../../constants/ui.constants.js';
-
 import { createButton } from '../../ui/button/button.ui.js';
 import { createHeading2 } from '../../ui/heading-2/heading-2.ui.js';
 import { createModal } from '../../ui/modal/modal.ui.js';
 
-export function createLeaderboardModal(leaderboardElement) {
+export function createLeaderboardModal(leaderboardElement, messages) {
   const titleElement = createHeading2({
     classes: ['leaderboard-modal-title'],
-    textContent: 'Leaderboard',
+    textContent: messages.leaderboard.title,
   });
 
   const closeButtonElement = createButton({
-    textContent: CLOSE_BUTTON_TEXT,
+    textContent: messages.buttons.close,
   });
 
   const contentElement = document.createElement('div');
@@ -22,7 +20,7 @@ export function createLeaderboardModal(leaderboardElement) {
 
   contentElement.append(titleElement, leaderboardElement, closeButtonElement);
 
-  const modalElement = createModal([contentElement]);
+  const modalElement = createModal([contentElement], titleElement);
 
   return {
     modalElement,

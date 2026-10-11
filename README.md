@@ -1,178 +1,76 @@
 # Memory Game
 
-Classic memory card game built with Vanilla JavaScript, CSS and Vite.
+A classic memory card game built with Vanilla JavaScript, CSS and Vite.
 
 ## Features
 
-- Classic memory card matching game
-- Card flip animations
-- Move counter
-- Matched pairs counter
-- Victory modal
-- Leaderboard with `localStorage`
-- Background music and sound effects
-- Responsive design
-- DOM reconciliation for card rendering
-- Accessible card labels
+- 16 cards forming 8 matching pairs
+- Move and matched-pair counters
+- New game and victory flows
+- Leaderboard with the 10 best results saved in `localStorage`
+- Persisted audio mute setting
+- Background music and card sound effects
+- Keyboard accessible cards and modal dialogs
+- Responsive layout and card DOM reconciliation
 
 ## Tech Stack
 
-- Vanilla JavaScript
+- Vanilla JavaScript (ES modules)
 - CSS
 - Vite
-- ESLint
-- Prettier
-- Husky
-- lint-staged
+- ESLint and Prettier
+- Node.js built-in test runner
 
 ## Architecture
 
-The project uses a layered UI architecture:
-
-```text
-Core
-  ↓
-Controllers
-  ↓
-Containers
-  ↓
-Elements
-  ↓
-UI
-```
-
-### Core
-
-Contains the game and leaderboard logic without any DOM dependencies.
-
-```text
-core/
-├── game/
-│   ├── game.actions.js
-│   ├── game.constants.js
-│   ├── game.service.js
-│   └── game.state.js
-└── leaderboard/
-    ├── leaderboard.actions.js
-    └── leaderboard.service.js
-```
-
-### Controllers
-
-Coordinate application behavior and connect the core with the UI layer.
-
-```text
-controller/
-├── game.controller.js
-└── leaderboard.controller.js
-```
-
-### Containers
-
-Compose larger parts of the interface and prepare data for Elements.
-
-```text
-components/containers/
-├── game/
-├── match-counter/
-└── moves-counter/
-```
-
-### Elements
-
-Represent concrete parts of the Memory Game interface.
-
-```text
-components/elements/
-├── game-board/
-├── header/
-├── leaderboard/
-├── leaderboard-modal/
-├── match-counter/
-├── moves-counter/
-└── victory-modal/
-```
-
-### UI
-
-Contains small reusable visual components.
-
-```text
-components/ui/
-├── button/
-├── card/
-├── heading-2/
-├── modal/
-└── paragraph/
-```
-
-### Events
-
-Connect DOM events with application controllers.
-
-```text
-events/
-└── game.events.js
-```
-
-## Project Structure
+The application keeps game rules independent from the browser UI. The app layer
+assembles services and controllers, while UI components receive translated
+messages and render the state provided by controllers.
 
 ```text
 src/
-├── audio/
+├── app/                   # App initialization and DOM event wiring
 ├── components/
-│   ├── containers/
-│   ├── elements/
-│   └── ui/
-├── constants/
-├── controller/
+│   ├── containers/        # Stateful UI composition and DOM reconciliation
+│   ├── elements/          # Memory Game interface elements
+│   └── ui/                # Small reusable visual components
+├── controller/           # Connect game services and UI
 ├── core/
-├── events/
-├── styles/
-└── utils/
+│   ├── game/              # Game state, actions, rules and logic
+│   └── leaderboard/       # Result validation, sorting and leaderboard logic
+├── i18n/                 # UI messages and locale definitions
+├── infrastructure/
+│   └── storage/           # Generic browser storage adapter
+├── services/              # Game audio and domain-specific persistence
+├── styles/                # Global and shared styles
+└── utils/                 # Small domain-independent utilities
 ```
+
+Persistent game data is stored under the single `memory-game` key. Its object
+contains the schema `version`, `leaderboard` results and `settings.audioMuted`.
 
 ## Local Setup
 
-Clone the repository and install dependencies:
+Install dependencies and start the development server:
 
 ```bash
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Open the URL shown in the terminal.
+Open the URL printed by Vite.
 
-## Code Quality
-
-Run ESLint:
+## Checks
 
 ```bash
 npm run lint
-```
-
-Format the project:
-
-```bash
-npm run format
-```
-
-The project uses Husky and lint-staged to run checks before commits.
-
-## Production
-
-Build the project:
-
-```bash
+npm test
 npm run build
 ```
 
-Preview the production build:
+Run `npm run format` to format project files.
+
+## Production
 
 ```bash
 npm run preview

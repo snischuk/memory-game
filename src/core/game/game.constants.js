@@ -14,6 +14,5 @@ export const TURN_RESULT = {
   NOT_MATCHED: 'notMatched',
 };
 
-export const MISMATCH_CLOSE_DELAY = 1000;
-
-export const MAX_LEADERBOARD_RESULTS = 10;
+export const CARDS_PER_TURN = 2;
+export const CARDS_PER_PAIR = CARDS_PER_TURN;

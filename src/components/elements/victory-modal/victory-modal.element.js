@@ -1,22 +1,16 @@
 import './victory-modal.element.css';
 
-import {
-  CLOSE_BUTTON_TEXT,
-  NEW_GAME_BUTTON_TEXT,
-  VICTORY_TITLE_TEXT,
-} from '../../../constants/ui.constants.js';
-
 import { createButton } from '../../ui/button/button.ui.js';
 import { createHeading2 } from '../../ui/heading-2/heading-2.ui.js';
 import { createModal } from '../../ui/modal/modal.ui.js';
 import { createParagraph } from '../../ui/paragraph/paragraph.ui.js';
 
-import { createElement } from '../../../utils/dom.js';
+import { createElement } from '../../../utils/create-element.util.js';
 
-export function createVictoryModal() {
+export function createVictoryModal(messages) {
   const titleElement = createHeading2({
     classes: ['victory-heading-2'],
-    textContent: VICTORY_TITLE_TEXT,
+    textContent: messages.victory.title,
   });
 
   const movesCountElement = createParagraph({
@@ -29,12 +23,12 @@ export function createVictoryModal() {
 
   const newGameButtonElement = createButton({
     classes: ['victory-new-game-button'],
-    textContent: NEW_GAME_BUTTON_TEXT,
+    textContent: messages.buttons.newGame,
   });
 
   const closeButtonElement = createButton({
     classes: ['victory-close-button'],
-    textContent: CLOSE_BUTTON_TEXT,
+    textContent: messages.buttons.close,
   });
 
   const contentElement = createElement('div', {
@@ -49,7 +43,7 @@ export function createVictoryModal() {
     closeButtonElement,
   );
 
-  const modalElement = createModal([contentElement]);
+  const modalElement = createModal([contentElement], titleElement);
 
   return {
     modalElement,

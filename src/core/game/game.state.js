@@ -1,8 +1,11 @@
+const INITIAL_MOVES_COUNT = 0;
+const MOVE_COUNT_INCREMENT = 1;
+
 export function createGameState() {
   return {
     openedCardIds: [],
     matchedCardIds: [],
-    movesCount: 0,
+    movesCount: INITIAL_MOVES_COUNT,
     isGameComplete: false,
   };
 }
@@ -20,5 +23,5 @@ export function addMatchedCards(matchedCardIds, firstCardId, secondCardId) {
 }
 
 export function incrementMovesCount(movesCount) {
-  return movesCount + 1;
+  return movesCount + MOVE_COUNT_INCREMENT;
 }

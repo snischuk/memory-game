@@ -1,32 +1,31 @@
 import './game.container.css';
 
 import { createHeader } from '../../elements/header/header.element.js';
-
-import { createMovesCounterContainer } from '../moves-counter/moves-counter.container.js';
-import { createMatchCounterContainer } from '../match-counter/match-counter.container.js';
-
 import { createVictoryModal } from '../../elements/victory-modal/victory-modal.element.js';
-import { createGameBoard } from '../../elements/game-board/game-board.element.js';
 import { createLeaderboard } from '../../elements/leaderboard/leaderboard.element.js';
 import { createLeaderboardModal } from '../../elements/leaderboard-modal/leaderboard-modal.element.js';
-
 import { openModal, closeModal } from '../../ui/modal/modal.ui.js';
+import { createGameBoardContainer } from '../game-board/game-board.container.js';
+import {
+  getMatchedPairsCount,
+  getTotalPairsCount,
+} from '../../../core/game/game.logic.js';
+import { createMovesCounter } from '../../elements/moves-counter/moves-counter.element.js';
+import { createMatchCounter } from '../../elements/match-counter/match-counter.element.js';
 
-export function createGameContainer() {
+export function createGameContainer(messages) {
   const {
     headerElement,
     newGameButtonElement: newGameHeaderButtonElement,
     leaderboardButtonElement,
     audioButtonElement,
-  } = createHeader();
+  } = createHeader(messages);
 
-  const { gameBoardElement, render: renderGameBoard } = createGameBoard();
+  const { gameBoardElement, render: renderGameBoard } =
+    createGameBoardContainer(messages);
 
-  const { movesCounterElement, render: renderMovesCounter } =
-    createMovesCounterContainer();
-
-  const { matchCounterElement, render: renderMatchCounter } =
-    createMatchCounterContainer();
+  const movesCounterElement = createMovesCounter();
+  const matchCounterElement = createMatchCounter();
 
   const {
     modalElement: victoryModalElement,
@@ -34,17 +33,20 @@ export function createGameContainer() {
     saveStatusElement: victorySaveStatusElement,
     newGameButtonElement,
     closeButtonElement: closeVictoryButtonElement,
-  } = createVictoryModal();
+  } = createVictoryModal(messages);
 
-  const { leaderboardElement, render: renderLeaderboard } = createLeaderboard();
+  const { leaderboardElement, render: renderLeaderboard } =
+    createLeaderboard(messages);
 
   const {
     modalElement: leaderboardModalElement,
     closeButtonElement: closeLeaderboardButtonElement,
-  } = createLeaderboardModal(leaderboardElement);
+  } = createLeaderboardModal(leaderboardElement, messages);
 
+  const rootElement = document.createElement('div');
   const mainElement = document.createElement('main');
 
+  rootElement.classList.add('app');
   mainElement.classList.add('main');
 
   mainElement.append(
@@ -53,9 +55,8 @@ export function createGameContainer() {
     matchCounterElement,
   );
 
-  document.body.prepend(headerElement);
-
-  document.body.append(
+  rootElement.append(
+    headerElement,
     mainElement,
     victoryModalElement,
     leaderboardModalElement,
@@ -63,16 +64,26 @@ export function createGameContainer() {
 
   function renderGame(game) {
     renderGameBoard(game.cards, game.gameState);
-    renderMovesCounter(game);
-    renderMatchCounter(game);
+    const matchedPairsCount = getMatchedPairsCount(
+      game.gameState.matchedCardIds,
+    );
+    const totalPairsCount = getTotalPairsCount(game.cards);
+
+    movesCounterElement.textContent = messages.game.moves(
+      game.gameState.movesCount,
+    );
+    matchCounterElement.textContent = messages.game.pairs(
+      matchedPairsCount,
+      totalPairsCount,
+    );
   }
 
   function showVictoryModal(movesCount, { isSaved } = {}) {
-    victoryMovesCountElement.textContent = `Moves: ${movesCount}`;
+    victoryMovesCountElement.textContent = messages.game.moves(movesCount);
 
     victorySaveStatusElement.textContent = isSaved
       ? ''
-      : 'Your result could not be saved to the leaderboard.';
+      : messages.victory.resultSaveFailed;
 
     openModal(victoryModalElement);
   }
@@ -92,6 +103,7 @@ export function createGameContainer() {
   }
 
   return {
+    rootElement,
     renderGame,
     showVictoryModal,
     closeVictoryModal,
